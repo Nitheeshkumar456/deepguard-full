@@ -304,12 +304,12 @@ class VideoForensicsEngine:
         overall_fake = round(overall_fake, 4)
         overall_real = round(1.0 - overall_fake, 4)
 
-        if video_face_score >= 0.60 or (audio_spoof_score is not None and audio_spoof_score >= 0.75):
+        if video_face_score >= 0.70 or (audio_spoof_score is not None and audio_spoof_score >= 0.80):
             prediction = "synthetic"
             evidence_category = "LIKELY_MANIPULATED"
             confidence = overall_fake
             risk_level = "critical" if confidence >= 0.85 else "high"
-        elif overall_fake <= 0.35 and max_frame_score <= 0.40:
+        elif overall_fake <= 0.30 and max_frame_score <= 0.35:
             prediction = "authentic"
             evidence_category = "LIKELY_AUTHENTIC"
             confidence = overall_real

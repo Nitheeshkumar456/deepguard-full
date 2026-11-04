@@ -151,8 +151,8 @@ class AudioDeepfakeDetector:
             raise InferenceError(f"Audio inference execution failed: {inf_err}")
 
         # Step 4: Decision logic & thresholds (ASVspoof operating point: 0.60)
-        THRESHOLD = 0.60
-        HIGH_THRESHOLD = 0.85
+        THRESHOLD = 0.70
+        HIGH_THRESHOLD = 0.90
 
         if calibrated_spoof >= THRESHOLD:
             prediction = "synthetic"

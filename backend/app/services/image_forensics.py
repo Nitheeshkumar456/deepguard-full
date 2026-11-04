@@ -323,12 +323,12 @@ class ImageForensicsEngine:
             fused_fake = (face_manipulation_score * 0.75) + (gan_artifact_score * 0.25)
             fused_real = 1.0 - fused_fake
 
-            if face_manipulation_score >= 0.60:
+            if face_manipulation_score >= 0.70:
                 prediction = "synthetic"
                 evidence_category = "LIKELY_MANIPULATED"
                 confidence = round(face_manipulation_score, 4)
                 risk_level = "critical" if confidence >= 0.85 else "high"
-            elif gan_artifact_score >= 0.75 and face_manipulation_score < 0.40:
+            elif gan_artifact_score >= 0.80 and face_manipulation_score < 0.30:
                 prediction = "synthetic"
                 evidence_category = "LIKELY_AI_GENERATED"
                 confidence = round(gan_artifact_score, 4)
@@ -338,7 +338,7 @@ class ImageForensicsEngine:
                     "description": f"Elevated periodic grid artifacts in 2D spectrum ({gan_artifact_score:.1%}) characteristic of AI image generators.",
                     "severity": "high"
                 })
-            elif face_manipulation_score <= 0.35 and gan_artifact_score <= 0.45:
+            elif face_manipulation_score <= 0.30 and gan_artifact_score <= 0.35:
                 prediction = "authentic"
                 evidence_category = "LIKELY_AUTHENTIC"
                 confidence = round(fused_real, 4)
