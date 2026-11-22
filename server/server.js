@@ -8,6 +8,8 @@
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
@@ -30,6 +32,21 @@ app.use((req, res, next) => {
     console.log(`[Express 5000] ${req.method} ${req.originalUrl} -> ${res.statusCode} (${duration}ms)`);
   });
   next();
+});
+
+// Direct APK download route for mobile QR code scanning
+app.get('/download-apk', (req, res) => {
+  const distApk = path.resolve(__dirname, '..', 'dist-apk', 'DeepGuard-AI.apk');
+  const buildApk = path.resolve(__dirname, '..', 'android', 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk');
+  const targetApk = fs.existsSync(distApk) ? distApk : (fs.existsSync(buildApk) ? buildApk : null);
+
+  if (targetApk) {
+    res.setHeader('Content-Type', 'application/vnd.android.package-archive');
+    res.setHeader('Content-Disposition', 'attachment; filename="DeepGuard-AI.apk"');
+    res.sendFile(targetApk);
+  } else {
+    res.status(404).json({ error: 'APK not found. Please build the Android app first.' });
+  }
 });
 
 // Express health check endpoint
