@@ -1,0 +1,62 @@
+name: Deploy Reports to GitHub Pages
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Android App E2E Automation"]
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-pages:
+    name: Publish Latest & Historical HTML Reports to GitHub Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate Fresh Test Reports
+        run: |
+          cd automation
+          npm install
+          node runners/run-appium-e2e.js
+
+      - name: Prepare GitHub Pages Directory Structure
+        run: |
+          mkdir -p public/reports/latest
+          mkdir -p public/reports/history/build-${{ github.run_number }}
+          cp -r "Test Results/HTML/"* public/reports/latest/ || true
+          cp -r "Test Results/Excel/"* public/reports/latest/ || true
+          cp -r "Test Results/Summary/"* public/reports/latest/ || true
+          cp -r public/reports/latest/* public/reports/history/build-${{ github.run_number }}/ || true
+          
+          # Create root index redirect
+          cat << 'EOF' > public/index.html
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta http-equiv="refresh" content="0; url=reports/latest/execution-report.html" />
+            <title>Redirecting to DeepGuard AI Automation Report...</title>
+          </head>
+          <body>
+            <p>Redirecting to <a href="reports/latest/execution-report.html">DeepGuard AI Automation Report</a>...</p>
+          </body>
+          </html>
+          EOF
+
+      - name: Deploy to GitHub Pages Branch (gh-pages)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

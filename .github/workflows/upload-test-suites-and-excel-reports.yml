@@ -86,3 +86,15 @@ jobs:
           path: reports/excel/Appium_Frontend_Login_E2E_Test_Results.xlsx
           retention-days: 90
 
+      - name: Upload Enterprise Appium Automation Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Enterprise-Appium-Automation-Report
+          path: |
+            Test Results/
+            reports/excel/Automation_Test_Report.xlsx
+            reports/excel/Execution_Summary.xlsx
+            reports/excel/Passed_Test_Cases.xlsx
+            reports/excel/Failed_Test_Cases.xlsx
+          retention-days: 90
+

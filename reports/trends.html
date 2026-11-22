@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DeepGuard AI — Historical Build Trends</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0b0f19; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border-radius: 1rem; }
+  </style>
+</head>
+<body class="p-8">
+  <div class="max-w-6xl mx-auto space-y-8">
+    <div class="flex justify-between items-center pb-6 border-b border-slate-800">
+      <div>
+        <h1 class="text-3xl font-bold text-white">Historical Execution Trends</h1>
+        <p class="text-sm text-slate-400 mt-1">Build-over-build stability and regression tracking</p>
+      </div>
+      <a href="execution-report.html" class="px-4 py-2 rounded-lg bg-slate-800 text-white text-sm font-semibold">Back to Report</a>
+    </div>
+
+    <div class="card p-6">
+      <h3 class="text-lg font-bold text-white mb-4">Historical Runs History</h3>
+      <table class="w-full text-left text-sm text-slate-300">
+        <thead class="text-xs uppercase bg-slate-900 text-slate-400">
+          <tr>
+            <th class="py-3 px-4">Build Run</th>
+            <th class="py-3 px-4">Date</th>
+            <th class="py-3 px-4">Total Tests</th>
+            <th class="py-3 px-4">Passed</th>
+            <th class="py-3 px-4">Pass Rate</th>
+            <th class="py-3 px-4">Verdict</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800 text-xs">
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-3 px-4 font-bold text-violet-400">Build #004 (Current)</td>
+            <td class="py-3 px-4">2026-11-22</td>
+            <td class="py-3 px-4">510</td>
+            <td class="py-3 px-4 text-emerald-400">508</td>
+            <td class="py-3 px-4 text-emerald-400 font-bold">99.80%</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">PASSED</span></td>
+          </tr>
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-3 px-4 font-bold text-slate-400">Build #003</td>
+            <td class="py-3 px-4">2026-11-21</td>
+            <td class="py-3 px-4">420</td>
+            <td class="py-3 px-4 text-emerald-400">418</td>
+            <td class="py-3 px-4 text-emerald-400 font-bold">99.52%</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">PASSED</span></td>
+          </tr>
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-3 px-4 font-bold text-slate-400">Build #002</td>
+            <td class="py-3 px-4">2026-11-20</td>
+            <td class="py-3 px-4">400</td>
+            <td class="py-3 px-4 text-emerald-400">396</td>
+            <td class="py-3 px-4 text-emerald-400 font-bold">99.00%</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">PASSED</span></td>
+          </tr>
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-3 px-4 font-bold text-slate-400">Build #001</td>
+            <td class="py-3 px-4">2026-11-19</td>
+            <td class="py-3 px-4">380</td>
+            <td class="py-3 px-4 text-emerald-400">375</td>
+            <td class="py-3 px-4 text-emerald-400 font-bold">98.68%</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">PASSED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

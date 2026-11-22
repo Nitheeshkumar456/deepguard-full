@@ -1,0 +1,26 @@
+{
+  "name": "deepguard-android-appium-e2e",
+  "version": "2.4.0",
+  "description": "Enterprise-Grade Android Appium E2E Automation Framework for DeepGuard AI",
+  "main": "runners/run-appium-e2e.js",
+  "scripts": {
+    "test": "node runners/run-appium-e2e.js",
+    "report": "node utils/report-generator.js",
+    "appium": "appium"
+  },
+  "keywords": [
+    "appium",
+    "android",
+    "automation",
+    "e2e",
+    "deepguard",
+    "testing",
+    "ci-cd"
+  ],
+  "author": "DeepGuard QA Automation Team",
+  "license": "ISC",
+  "dependencies": {
+    "selenium-webdriver": "^4.26.0",
+    "xlsx": "^0.18.5"
+  }
+}

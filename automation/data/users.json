@@ -1,0 +1,33 @@
+{
+  "admin": {
+    "email": "admin@deepguard.ai",
+    "password": "AdminSecurePassword2026!",
+    "role": "SuperAdmin",
+    "fullName": "Chief Forensic Administrator"
+  },
+  "analyst": {
+    "email": "analyst@deepguard.ai",
+    "password": "AnalystSecurePassword2026!",
+    "role": "ForensicAnalyst",
+    "fullName": "Senior Digital Forensics Examiner"
+  },
+  "investigator": {
+    "email": "investigator@deepguard.ai",
+    "password": "InvestigatorPassword2026!",
+    "role": "Investigator",
+    "fullName": "Cybercrime Case Investigator"
+  },
+  "unverifiedUser": {
+    "email": "pending_verification@deepguard.ai",
+    "password": "PendingPassword2026!",
+    "role": "StandardUser",
+    "isVerified": false,
+    "otpCode": "847291"
+  },
+  "lockedAccount": {
+    "email": "locked_account@deepguard.ai",
+    "password": "WrongPasswordAttempt!",
+    "role": "StandardUser",
+    "isLocked": true
+  }
+}

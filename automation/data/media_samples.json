@@ -1,0 +1,29 @@
+{
+  "images": {
+    "authentic": [
+      { "id": "IMG-REAL-01", "filename": "authentic_portrait_01.jpg", "format": "JPEG", "expected": "Authentic" },
+      { "id": "IMG-REAL-02", "filename": "camera_id_scan_02.png", "format": "PNG", "expected": "Authentic" }
+    ],
+    "manipulated": [
+      { "id": "IMG-FAKE-01", "filename": "stylegan_faceswap_01.jpg", "type": "FaceSwap", "expected": "Manipulated" },
+      { "id": "IMG-FAKE-02", "filename": "diffusion_morph_02.png", "type": "Morphing", "expected": "Manipulated" }
+    ]
+  },
+  "videos": {
+    "authentic": [
+      { "id": "VID-REAL-01", "filename": "youtube_c23_interview.mp4", "duration": "4.2s", "expected": "Authentic" }
+    ],
+    "manipulated": [
+      { "id": "VID-FAKE-01", "filename": "face2face_neuraltexture.mp4", "duration": "3.8s", "expected": "Manipulated" }
+    ]
+  },
+  "audio": {
+    "authentic": [
+      { "id": "AUD-REAL-01", "filename": "studio_speech_clean.wav", "expected": "Authentic" }
+    ],
+    "manipulated": [
+      { "id": "AUD-FAKE-01", "filename": "elevenlabs_neural_clone.wav", "expected": "Manipulated" },
+      { "id": "AUD-FAKE-02", "filename": "spliced_replayed_audio.wav", "expected": "Manipulated" }
+    ]
+  }
+}
