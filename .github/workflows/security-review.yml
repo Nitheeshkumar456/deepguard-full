@@ -48,26 +48,7 @@ jobs:
 
       - name: Run Secret Leak Detection Audit
         run: |
-          mkdir -p reports
-          python -c '
-          import os, json, re
-          findings = []
-          for root, dirs, files in os.walk("."):
-              dirs[:] = [d for d in dirs if d not in [".git", "node_modules", "dist", ".venv", "__pycache__"]]
-              for file in files:
-                  if file.endswith((".py", ".js", ".ts", ".tsx", ".json", ".md")):
-                      p = os.path.join(root, file)
-                      try:
-                          with open(p, "r", encoding="utf-8", errors="ignore") as f:
-                              content = f.read()
-                              if re.search(r"(?:api[_-]?key|secret|password)\s*[:=]\s*[\"'\'][A-Za-z0-9_\-]{24,}[\"'\']", content, re.I):
-                                  findings.append({"File": p, "Description": "Potential secret pattern", "Severity": "HIGH"})
-                      except Exception:
-                          pass
-          with open("reports/gitleaks.json", "w") as f:
-              json.dump(findings, f, indent=2)
-          print(f"Secret scan completed. Found {len(findings)} potential flags.")
-          '
+          python scripts/scan_secrets.py
 
       - name: Generate Consolidated Security Reports
         run: |
@@ -91,4 +72,4 @@ jobs:
           if [ -f reports/executive-summary.md ]; then
             cat reports/executive-summary.md >> $GITHUB_STEP_SUMMARY
           fi
-          echo "### Security Review Completed Successfully" >> $GITHUB_STEP_SUMMARY
+          echo -e "\n### Security Review Completed Successfully" >> $GITHUB_STEP_SUMMARY
