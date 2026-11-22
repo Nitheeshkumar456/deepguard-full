@@ -1,0 +1,14 @@
+Benchmark Metric,Observed Value,Baseline Target,Performance Status
+Concurrent Virtual Users,100 Users,100 Users,PASS
+Continuous Test Duration,61.0 Seconds,60 Seconds,PASS
+Total Requests Dispatched,"17,989 Requests","> 5,000 Requests",PASS
+Requests Per Second (RPS),294.7 req/sec,> 100 req/sec,PASS
+Success Rate,100.0%,>= 99.00%,PASS
+Fastest Response Time (Min),11.08 ms,< 50 ms,PASS
+Average Response Time (Mean),312.14 ms,< 300 ms,PASS
+50th Percentile (Median),185.08 ms,< 250 ms,PASS
+90th Percentile (p90),705.84 ms,< 500 ms,PASS
+95th Percentile (p95),974.1 ms,< 750 ms,PASS
+Slowest Response Time (Max),5842.9 ms,"< 2,000 ms",PASS
+Data Throughput,596090.27 KB/s,> 50 KB/s,PASS
+System Stability & Health,Zero Process Crashes / 100% Responsive,Zero Crashes,PASS

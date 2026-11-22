@@ -1,0 +1,7 @@
+Endpoint Name,HTTP Method,URL Tested,Total Requests,RPS,Success Rate,Min Latency (ms),Avg Latency (ms),p50 Latency (ms),p95 Latency (ms),Max Latency (ms),Status
+APK Download Probe,HEAD,http://127.0.0.1:5000/download-apk,1771,29.0,1.0,23.34,140.28,96.36,311.6,3643.88,PASS
+Auth Me (Unauth Check),GET,http://127.0.0.1:8000/api/auth/me,1817,29.8,1.0,31.2,416.28,286.96,1137.06,5387.52,PASS
+Express Gateway Health,GET,http://127.0.0.1:5000/express/health,4515,74.0,1.0,11.08,143.76,93.37,324.31,4680.91,PASS
+FastAPI Core Probe,GET,http://127.0.0.1:8000/,4506,73.8,1.0,30.08,393.77,274.24,1092.1,5842.9,PASS
+OpenAPI JSON Schema,GET,http://127.0.0.1:8000/openapi.json,2714,44.5,1.0,32.45,401.97,297.09,1087.2,5715.57,PASS
+Swagger OpenAPI Docs,GET,http://127.0.0.1:8000/docs,2666,43.7,1.0,28.27,411.05,288.05,1109.88,5434.85,PASS

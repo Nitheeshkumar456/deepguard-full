@@ -47,13 +47,14 @@ jobs:
           name: All-Test-Suites-Excel-Reports
           path: |
             reports/excel/DeepGuard_All_Test_Suites_Results.xlsx
+            reports/excel/DeepGuard_Baseline_Load_Test_Results.xlsx
             reports/excel/DeepGuard_Image_Test_Suite_200.xlsx
             reports/excel/DeepGuard_Video_Test_Suite_200.xlsx
             reports/excel/DeepGuard_Audio_Test_Suite_200.xlsx
             reports/excel/DeepGuard_API_Security_Test_Suite_50.xlsx
             reports/excel/DeepGuard_Web_Android_Parity_Test_Suite_50.xlsx
             reports/excel/*.csv
-            reports/DeepGuard_Test_Suites_Comprehensive_Report.md
+            reports/*.md
           retention-days: 90
           if-no-files-found: error
 
@@ -62,5 +63,12 @@ jobs:
         with:
           name: DeepGuard-Master-Excel-Workbook
           path: reports/excel/DeepGuard_All_Test_Suites_Results.xlsx
+          retention-days: 90
+
+      - name: Upload Baseline Load Test Excel Report Separately
+        uses: actions/upload-artifact@v4
+        with:
+          name: DeepGuard-Baseline-Load-Test-Excel
+          path: reports/excel/DeepGuard_Baseline_Load_Test_Results.xlsx
           retention-days: 90
 
