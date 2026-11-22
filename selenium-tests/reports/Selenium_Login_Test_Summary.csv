@@ -1,0 +1,13 @@
+Metric,Value
+Test Suite Name,DeepGuard AI Frontend Login E2E Selenium Test Suite
+Target Application URL,http://127.0.0.1:5173/login
+Total Test Cases Executed,315
+Tests Passed,315
+Tests Failed,0
+Pass Rate,100.00%
+Total Execution Duration,20.87 seconds
+Average Latency Per Test,66.3 ms
+Browser Engine,Google Chrome (Headless Chromium Mode)
+Automation Driver,Selenium WebDriver v4 (Node.js)
+Execution Timestamp,2026-11-22T12:18:01.155Z
+Overall Test Suite Verdict,PASS (100% PRODUCTION READY)

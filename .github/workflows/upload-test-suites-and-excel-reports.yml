@@ -72,3 +72,10 @@ jobs:
           path: reports/excel/DeepGuard_Baseline_Load_Test_Results.xlsx
           retention-days: 90
 
+      - name: Upload Selenium Frontend Login E2E Excel Report Separately
+        uses: actions/upload-artifact@v4
+        with:
+          name: Selenium-Frontend-Login-E2E-Excel
+          path: reports/excel/Selenium_Frontend_Login_E2E_Test_Results.xlsx
+          retention-days: 90
+
