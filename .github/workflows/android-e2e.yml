@@ -25,11 +25,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-      - name: Validate Gradle Wrapper
+      - name: Validate Gradle & Android Tooling
         run: |
+          echo "Android Home: $ANDROID_HOME"
           cd android
           chmod +x gradlew || true
 
