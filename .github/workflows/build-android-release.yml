@@ -21,3 +21,4 @@ jobs:
           cd android
           chmod +x gradlew || true
           ./gradlew assembleRelease || echo "Gradle build step ready"
+
