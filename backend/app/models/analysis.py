@@ -124,6 +124,12 @@ class AnalysisResult(Base):
     voice_cloning_score = Column(Float, nullable=True)      # audio
     spectral_anomaly_score = Column(Float, nullable=True)   # audio
 
+    # v2 — Morphing & face-swap detection scores (image / video only)
+    morphing_score = Column(Float, nullable=True)
+    boundary_discontinuity_score = Column(Float, nullable=True)
+    lbp_entropy_score = Column(Float, nullable=True)
+    color_mismatch_score = Column(Float, nullable=True)
+
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     # Relationships

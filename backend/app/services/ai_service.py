@@ -47,6 +47,8 @@ class ForensicIndicator:
     indicator_type: str
     description: str
     severity: str  # "info" | "low" | "medium" | "high" | "critical"
+    timestamp_seconds: Optional[float] = None
+    frame_number: Optional[int] = None
     region_x: Optional[float] = None
     region_y: Optional[float] = None
     region_w: Optional[float] = None
@@ -67,6 +69,16 @@ class InferenceResult:
     temporal_inconsistency_score: Optional[float] = None
     voice_cloning_score: Optional[float] = None
     spectral_anomaly_score: Optional[float] = None
+    morphing_score: Optional[float] = None             # NEW: composite morphing/face-swap score
+    boundary_discontinuity_score: Optional[float] = None  # NEW: paste-seam detection
+    lbp_entropy_score: Optional[float] = None          # NEW: skin texture entropy
+    color_mismatch_score: Optional[float] = None       # NEW: face/context color divergence
+    splicing_score: Optional[float] = None             # Audio: cut-and-paste boundary score
+    replay_attack_score: Optional[float] = None        # Audio: loudspeaker replay score
+    splice_points: List[float] = field(default_factory=list)  # Audio: detected splice timestamps (sec)
+    suspicious_timestamps: List[float] = field(default_factory=list)
+    frame_evidences: List[Any] = field(default_factory=list)
+    duration_seconds: float = 0.0
     indicators: List[ForensicIndicator] = field(default_factory=list)
     processing_time_seconds: float = 0.0
     device_used: str = "cpu"
@@ -82,7 +94,9 @@ class InferenceResult:
 class DeepGuardModel(nn.Module):
     """EfficientNet-B0 model for deepfake detection.
     Matches the architecture and state_dict layer names in efficientnet_b0_ffpp_c23.pth.
-    Class 0 = Real (Authentic), Class 1 = Fake (Synthetic).
+    Class mapping (PyTorch ImageFolder alphabetical order):
+      Class 0 = Fake (Manipulated / Synthetic)
+      Class 1 = Real (Bonafide / Authentic)
     """
 
     def __init__(self):
@@ -166,6 +180,8 @@ class _ModelManager:
                             map_location=device,
                             weights_only=True,
                         )
+                        if isinstance(state_dict, dict) and "model_state_dict" in state_dict:
+                            state_dict = state_dict["model_state_dict"]
                         model.load_state_dict(state_dict)
                         self._has_trained_weights = True
                         logger.info("Loaded trained weights from: %s", model_path)
@@ -193,7 +209,17 @@ class _ModelManager:
 
                 self._model = model
                 self._model_name = getattr(settings, "AI_MODEL_NAME", "deepguard-cnn-v1")
-                self._model_version = "1.0.0-trained" if self._has_trained_weights else "1.0.0-untrained"
+                # Version: 4.0.0 for v4 expanded 2k, 3.0.0 for v3 multimodal, 2.0.0 for v2 finetuned, 1.0.0 for original checkpoint
+                if "v5" in str(model_path):
+                    self._model_version = "5.0.0"
+                elif "v4" in str(model_path):
+                    self._model_version = "4.0.0"
+                elif "v3" in str(model_path):
+                    self._model_version = "3.0.0"
+                elif "v2" in str(model_path):
+                    self._model_version = "2.0.0"
+                else:
+                    self._model_version = "1.0.0"
                 self._loaded = True
 
                 logger.info(
@@ -427,6 +453,10 @@ def run_image_inference(file_path: str) -> InferenceResult:
         face_manipulation_score=res.face_manipulation_score,
         gan_artifact_score=res.gan_artifact_score,
         spectral_anomaly_score=res.spectral_anomaly_score,
+        morphing_score=getattr(res, "morphing_score", None),
+        boundary_discontinuity_score=getattr(res, "boundary_discontinuity_score", None),
+        lbp_entropy_score=getattr(res, "lbp_entropy_score", None),
+        color_mismatch_score=getattr(res, "color_mismatch_score", None),
         indicators=forensic_indicators,
         processing_time_seconds=round(elapsed, 4),
         device_used=str(_model_manager.device),
@@ -470,8 +500,8 @@ def run_video_inference(file_path: str) -> InferenceResult:
         )
 
     if inference_error is not None:
-        from .exceptions import DeepGuardException
-        if isinstance(inference_error, DeepGuardException):
+        from .exceptions import AIServiceError
+        if isinstance(inference_error, AIServiceError):
             raise inference_error
         raise InferenceError(f"Video forensic analysis failed: {inference_error}")
 
@@ -487,6 +517,8 @@ def run_video_inference(file_path: str) -> InferenceResult:
             indicator_type=ind["indicator_type"],
             description=ind["description"],
             severity=ind.get("severity", "medium"),
+            timestamp_seconds=ind.get("timestamp_seconds"),
+            frame_number=ind.get("frame_number"),
             region_x=ind.get("region_x"),
             region_y=ind.get("region_y"),
             region_w=ind.get("region_w"),
@@ -507,6 +539,13 @@ def run_video_inference(file_path: str) -> InferenceResult:
         temporal_inconsistency_score=vres.temporal_inconsistency_score,
         voice_cloning_score=vres.audio_spoof_score,
         spectral_anomaly_score=vres.cross_modal_inconsistency,
+        morphing_score=getattr(vres, "morphing_score", None),
+        boundary_discontinuity_score=getattr(vres, "boundary_discontinuity_score", None),
+        lbp_entropy_score=getattr(vres, "lbp_entropy_score", None),
+        color_mismatch_score=getattr(vres, "color_mismatch_score", None),
+        suspicious_timestamps=getattr(vres, "suspicious_timestamps", []),
+        frame_evidences=getattr(vres, "frame_evidences", []),
+        duration_seconds=getattr(vres, "duration_seconds", 0.0),
         indicators=forensic_indicators,
         processing_time_seconds=round(elapsed, 4),
         device_used=str(_model_manager.device),

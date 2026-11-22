@@ -407,6 +407,22 @@ export default function AnalysisDetails() {
                             : "Normal"}
                         </span>
                       </div>
+                      {result.splicing_score !== undefined && result.splicing_score !== null && (
+                        <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                          <span className="text-[11px] text-slate-400 block font-medium">Audio Splicing</span>
+                          <span className="text-sm font-bold text-violet-400 mt-0.5 block">
+                            {(result.splicing_score * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                      )}
+                      {result.replay_attack_score !== undefined && result.replay_attack_score !== null && (
+                        <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+                          <span className="text-[11px] text-slate-400 block font-medium">Replay Attack Risk</span>
+                          <span className="text-sm font-bold text-orange-400 mt-0.5 block">
+                            {(result.replay_attack_score * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <p className="text-[11px] text-slate-500 mt-4 max-w-md leading-relaxed">
@@ -536,6 +552,56 @@ export default function AnalysisDetails() {
                 </div>
               </div>
             </div>
+
+            {/* Morphing & Face-Swap Forensics (v2) */}
+            {result.morphing_score !== undefined && result.morphing_score !== null && (
+              <div className="rounded-2xl border border-white/10 bg-white/[0.01] p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                    <Sliders size={15} className="text-violet-400" />
+                    Morphing & Face-Swap Signals
+                  </h3>
+                  <span className={`text-xs px-2 py-0.5 rounded font-mono font-bold ${
+                    result.morphing_score >= 0.7
+                      ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                      : result.morphing_score >= 0.4
+                      ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                      : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                  }`}>
+                    {(result.morphing_score * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="space-y-2.5 text-xs">
+                  <div>
+                    <div className="flex justify-between text-slate-400 mb-1">
+                      <span>Boundary Discontinuity</span>
+                      <span className="text-white font-mono">{((result.boundary_discontinuity_score ?? 0) * 100).toFixed(1)}%</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                      <div className="h-full bg-rose-500 rounded-full" style={{ width: `${Math.min(100, (result.boundary_discontinuity_score ?? 0) * 100)}%` }} />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-slate-400 mb-1">
+                      <span>LBP Skin Texture Entropy</span>
+                      <span className="text-white font-mono">{((result.lbp_entropy_score ?? 0) * 100).toFixed(1)}%</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                      <div className="h-full bg-amber-500 rounded-full" style={{ width: `${Math.min(100, (result.lbp_entropy_score ?? 0) * 100)}%` }} />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-slate-400 mb-1">
+                      <span>Skin Tone Color Mismatch</span>
+                      <span className="text-white font-mono">{((result.color_mismatch_score ?? 0) * 100).toFixed(1)}%</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                      <div className="h-full bg-violet-500 rounded-full" style={{ width: `${Math.min(100, (result.color_mismatch_score ?? 0) * 100)}%` }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

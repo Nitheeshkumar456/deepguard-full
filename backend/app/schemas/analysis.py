@@ -49,6 +49,11 @@ class AnalysisResultOut(BaseModel):
     temporal_inconsistency_score: Optional[float] = None
     voice_cloning_score: Optional[float] = None
     spectral_anomaly_score: Optional[float] = None
+    # v2 — Morphing & face-swap detection scores (None for audio analyses)
+    morphing_score: Optional[float] = None
+    boundary_discontinuity_score: Optional[float] = None
+    lbp_entropy_score: Optional[float] = None
+    color_mismatch_score: Optional[float] = None
     created_at: datetime
 
 

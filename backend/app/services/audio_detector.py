@@ -22,7 +22,9 @@ import torch
 import torch.nn as nn
 
 from .aasist_model import AASISTAudioModel, DEFAULT_AASIST_CONFIG
-from .audio_preprocessor import preprocess_audio, PreprocessedAudio
+from .audio_specnet_model import DeepGuardAudioSpecNet, extract_dynamic_spectrogram
+from .audio_preprocessor import preprocess_audio, load_audio_file, PreprocessedAudio
+from .audio_tampering_detector import get_audio_tampering_detector
 from .ai_service import InferenceResult, ForensicIndicator
 from .exceptions import ModelUnavailableError, InferenceError
 
@@ -38,6 +40,9 @@ class AudioDeepfakeDetector:
         self._lock = threading.Lock()
         self._loaded = False
         self._model: Optional[nn.Module] = None
+        self._specnet_model: Optional[nn.Module] = None
+        self._specnet_temp: float = 1.0
+        self._specnet_loaded: bool = False
         self._device: Optional[torch.device] = None
         self._model_path = model_path
         self.model_name = "AASIST-GraphAttention"
@@ -58,6 +63,18 @@ class AudioDeepfakeDetector:
         raise ModelUnavailableError(
             "AASIST audio deepfake model checkpoint not found. Expected 'ai/models/AASIST.pth'."
         )
+
+    def _resolve_specnet_path(self) -> Optional[str]:
+        candidates = [
+            os.path.join(os.path.dirname(__file__), "..", "..", "..", "ai", "models", "deepguard_audio_v2.pth"),
+            os.path.join(os.getcwd(), "ai", "models", "deepguard_audio_v2.pth"),
+            os.path.join(os.getcwd(), "..", "ai", "models", "deepguard_audio_v2.pth"),
+            "ai/models/deepguard_audio_v2.pth",
+        ]
+        for c in candidates:
+            if c and os.path.isfile(c):
+                return os.path.abspath(c)
+        return None
 
     def load_model(self) -> None:
         if self._loaded:
@@ -82,6 +99,25 @@ class AudioDeepfakeDetector:
                 self._loaded = True
                 self._load_error = None
                 logger.info("AASIST audio deepfake detector successfully loaded and operational.")
+
+                # Optionally load DeepGuard-AudioSpecNet-v2 for calibrated dual-ensemble
+                specnet_path = self._resolve_specnet_path()
+                if specnet_path:
+                    try:
+                        logger.info(f"Loading DeepGuard-AudioSpecNet-v2 from {specnet_path}...")
+                        specnet = DeepGuardAudioSpecNet(num_classes=2)
+                        spec_ckpt = torch.load(specnet_path, map_location=self._device)
+                        specnet.load_state_dict(spec_ckpt["model_state_dict"])
+                        self._specnet_temp = float(spec_ckpt.get("calibrated_temperature", 1.0))
+                        specnet.to(self._device)
+                        specnet.eval()
+                        self._specnet_model = specnet
+                        self._specnet_loaded = True
+                        self.model_name = "DeepGuard-DualAudio-Ensemble"
+                        self.model_version = "v2.0"
+                        logger.info(f"DeepGuard-AudioSpecNet-v2 loaded (T={self._specnet_temp:.4f}). Operating in Dual-Ensemble mode.")
+                    except Exception as sn_exc:
+                        logger.warning(f"Could not load SpecNet-v2 checkpoint ({sn_exc}); running AASIST standalone.")
             except Exception as exc:
                 self._load_error = str(exc)
                 logger.error(f"Failed to load AASIST audio deepfake model: {exc}", exc_info=True)
@@ -139,40 +175,112 @@ class AudioDeepfakeDetector:
             bonafide_probs = probs[:, 1]
 
             mean_spoof = float(np.mean(spoof_probs))
-            max_spoof = float(np.max(spoof_probs))
+            med_spoof = float(np.median(spoof_probs))
+            p75_spoof = float(np.percentile(spoof_probs, 75))
             mean_bonafide = float(np.mean(bonafide_probs))
 
-            # Calibrate: give weight to both average and peak anomaly window
-            calibrated_spoof = float(np.clip(0.70 * mean_spoof + 0.30 * max_spoof, 0.0, 1.0))
+            # Calibrate: robust median and upper-quartile aggregation prevents single noisy/silent window bias
+            calibrated_spoof = float(np.clip(0.70 * med_spoof + 0.30 * p75_spoof, 0.0, 1.0))
             calibrated_bonafide = float(np.clip(1.0 - calibrated_spoof, 0.0, 1.0))
 
         except Exception as inf_err:
             logger.error(f"Audio inference error on {file_path}: {inf_err}", exc_info=True)
             raise InferenceError(f"Audio inference execution failed: {inf_err}")
 
-        # Step 4: Decision logic & thresholds (ASVspoof operating point: 0.60)
-        THRESHOLD = 0.70
-        HIGH_THRESHOLD = 0.90
+        # Step 4: Run Audio Tampering, Splicing, Replay & SpecNet Spectrogram Analysis
+        tampering_data = {
+            "splicing_score": 0.0,
+            "replay_attack_score": 0.0,
+            "voice_manipulation_score": 0.0,
+            "editing_artifact_score": 0.0,
+            "composite_tampering_score": 0.0,
+            "indicators": [],
+            "splice_points": [],
+        }
+        specnet_fake_prob: Optional[float] = None
+        try:
+            raw_audio, sr, _ = load_audio_file(file_path)
+            tamper_detector = get_audio_tampering_detector()
+            tampering_data = tamper_detector.analyze(raw_audio, sr)
 
-        if calibrated_spoof >= THRESHOLD:
+            # SpecNet dynamic spectrogram inference
+            if self._specnet_loaded and self._specnet_model is not None:
+                try:
+                    spec = extract_dynamic_spectrogram(raw_audio, sr=sr, target_length=128)
+                    spec_tensor = torch.from_numpy(spec).unsqueeze(0).to(self._device)
+                    with torch.no_grad():
+                        _, sn_logits = self._specnet_model(spec_tensor)
+                        cal_sn_logits = sn_logits / self._specnet_temp
+                        sn_probs = torch.softmax(cal_sn_logits, dim=1).cpu().numpy()[0]
+                        specnet_fake_prob = float(sn_probs[1])
+
+                    # Dual-Ensemble: Raw-Waveform Phase Attention (AASIST) + Dynamic Formant Spectrogram (SpecNet)
+                    fused_spoof = float(np.clip(0.45 * calibrated_spoof + 0.55 * specnet_fake_prob, 0.0, 1.0))
+                    calibrated_spoof = fused_spoof
+                    calibrated_bonafide = float(np.clip(1.0 - calibrated_spoof, 0.0, 1.0))
+                except Exception as sn_inf_err:
+                    logger.debug("SpecNet inference note on %s: %s", file_path, sn_inf_err)
+        except Exception as tamper_err:
+            logger.debug("Audio tampering analysis note on %s: %s", file_path, tamper_err)
+
+        comp_tampering = tampering_data.get("composite_tampering_score", 0.0)
+        splicing_score = tampering_data.get("splicing_score", 0.0)
+        replay_score = tampering_data.get("replay_attack_score", 0.0)
+
+        # Step 5: Multi-evidence calibrated decision logic
+        # Either AASIST neural vocoder synthesis OR signal-level tampering / splicing / replay
+        THRESHOLD = 0.50
+        HIGH_THRESHOLD = 0.85
+
+        is_synthetic = (
+            (calibrated_spoof >= THRESHOLD)
+            or (comp_tampering >= 0.50)
+            or (splicing_score >= 0.50)
+            or (replay_score >= 0.50)
+        )
+        is_authentic = (
+            (calibrated_bonafide >= 0.55)
+            and (comp_tampering < 0.35)
+            and (splicing_score < 0.35)
+            and (replay_score < 0.35)
+        )
+
+        effective_fake_prob = float(np.clip(max(calibrated_spoof, comp_tampering, splicing_score, replay_score), 0.0, 1.0))
+        effective_real_prob = float(np.clip(1.0 - effective_fake_prob, 0.0, 1.0))
+
+        if is_synthetic:
             prediction = "synthetic"
-            confidence = float(np.clip(calibrated_spoof, 0.60, 0.99))
-            risk_level = "critical" if calibrated_spoof >= HIGH_THRESHOLD else "high"
-        elif calibrated_bonafide >= THRESHOLD:
+            confidence = float(np.clip(effective_fake_prob, 0.65, 0.99))
+            risk_level = "critical" if effective_fake_prob >= HIGH_THRESHOLD else "high"
+            eval_probs = {"authentic": round(effective_real_prob, 4), "synthetic": round(effective_fake_prob, 4)}
+        elif is_authentic:
             prediction = "authentic"
             confidence = float(np.clip(calibrated_bonafide, 0.60, 0.99))
             risk_level = "low"
+            eval_probs = {"authentic": round(calibrated_bonafide, 4), "synthetic": round(calibrated_spoof, 4)}
         else:
             prediction = "uncertain"
             confidence = float(round(0.50 + abs(calibrated_spoof - 0.50), 2))
             risk_level = "medium"
+            eval_probs = {"authentic": round(calibrated_bonafide, 4), "synthetic": round(calibrated_spoof, 4)}
 
-        # Step 5: Construct forensic indicators
+        # Step 6: Construct forensic indicators
         indicators: List[ForensicIndicator] = []
         voice_cloning_score = round(calibrated_spoof, 4)
-        spectral_anomaly_score = round(min(preprocessed.spectral_flatness * 10.0, 1.0), 4)
+        spectral_anomaly_score = round(max(
+            float(np.clip(preprocessed.spectral_flatness * 10.0, 0.0, 1.0)),
+            comp_tampering
+        ), 4)
 
-        if prediction == "synthetic":
+        # Add tampering and splicing indicators
+        for tind in tampering_data.get("indicators", []):
+            indicators.append(ForensicIndicator(
+                indicator_type=tind.get("indicator_type", "Audio Tampering Artifact"),
+                description=tind.get("description", "Acoustic anomaly detected."),
+                severity=tind.get("severity", "medium"),
+            ))
+
+        if calibrated_spoof >= THRESHOLD:
             indicators.append(
                 ForensicIndicator(
                     indicator_type="Spectro-Temporal Graph Anomaly",
@@ -193,6 +301,17 @@ class AudioDeepfakeDetector:
                     severity="high",
                 )
             )
+            if specnet_fake_prob is not None and specnet_fake_prob >= THRESHOLD:
+                indicators.append(
+                    ForensicIndicator(
+                        indicator_type="Multi-Resolution Spectrogram Discontinuity",
+                        description=(
+                            f"Dynamic spectrogram analysis (Log-Mel + Delta + Delta-Delta) detected artificial formant "
+                            f"transitions and harmonic suppression with {specnet_fake_prob * 100:.1f}% synthetic confidence."
+                        ),
+                        severity="high",
+                    )
+                )
             if preprocessed.spectral_flatness > 0.05:
                 indicators.append(
                     ForensicIndicator(
@@ -204,7 +323,7 @@ class AudioDeepfakeDetector:
                         severity="medium",
                     )
                 )
-        elif prediction == "authentic":
+        elif is_authentic:
             indicators.append(
                 ForensicIndicator(
                     indicator_type="Organic Vocal Tract Dynamics",
@@ -215,6 +334,17 @@ class AudioDeepfakeDetector:
                     severity="info",
                 )
             )
+            if specnet_fake_prob is not None and specnet_fake_prob < 0.40:
+                indicators.append(
+                    ForensicIndicator(
+                        indicator_type="Harmonic Formant Naturalness",
+                        description=(
+                            f"Multi-order dynamic spectrogram verified organic vocal tract formant bandwidths "
+                            f"with {(1.0 - specnet_fake_prob) * 100:.1f}% authenticity score."
+                        ),
+                        severity="info",
+                    )
+                )
             indicators.append(
                 ForensicIndicator(
                     indicator_type="Consistent Acoustic Phase Distribution",
@@ -222,7 +352,7 @@ class AudioDeepfakeDetector:
                     severity="info",
                 )
             )
-        else:
+        elif not indicators:
             indicators.append(
                 ForensicIndicator(
                     indicator_type="Inconclusive Decision Boundary",
@@ -248,12 +378,12 @@ class AudioDeepfakeDetector:
             risk_level=risk_level,
             model_name=self.model_name,
             model_version=self.model_version,
-            probabilities={
-                "authentic": round(calibrated_bonafide, 4),
-                "synthetic": round(calibrated_spoof, 4),
-            },
+            probabilities=eval_probs,
             voice_cloning_score=voice_cloning_score,
             spectral_anomaly_score=spectral_anomaly_score,
+            splicing_score=round(splicing_score, 4),
+            replay_attack_score=round(replay_score, 4),
+            splice_points=tampering_data.get("splice_points", []),
             indicators=indicators,
             processing_time_seconds=round(elapsed, 4),
             device_used=str(self._device),

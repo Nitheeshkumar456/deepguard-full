@@ -59,6 +59,13 @@ data class AnalysisResultOut(
     @SerializedName("temporal_inconsistency_score") val temporalInconsistencyScore: Double?,
     @SerializedName("voice_cloning_score") val voiceCloningScore: Double?,
     @SerializedName("spectral_anomaly_score") val spectralAnomalyScore: Double?,
+    @SerializedName("morphing_score") val morphingScore: Double? = null,
+    @SerializedName("boundary_discontinuity_score") val boundaryDiscontinuityScore: Double? = null,
+    @SerializedName("lbp_entropy_score") val lbpEntropyScore: Double? = null,
+    @SerializedName("color_mismatch_score") val colorMismatchScore: Double? = null,
+    @SerializedName("splicing_score") val splicingScore: Double? = null,
+    @SerializedName("replay_attack_score") val replayAttackScore: Double? = null,
+    @SerializedName("splice_points") val splicePoints: List<Double>? = null,
     @SerializedName("created_at") val createdAt: String
 )
 

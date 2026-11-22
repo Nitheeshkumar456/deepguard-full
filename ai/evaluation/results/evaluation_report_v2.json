@@ -1,0 +1,135 @@
+{
+  "device": "cpu",
+  "original_checkpoint": "C:\\Final_year_projects\\DeepGaurd AI-Multimodel Authenticity Platfrom\\DeepGuard-AI\\ai\\models\\efficientnet_b0_ffpp_c23.pth",
+  "upgraded_checkpoint": "C:\\Final_year_projects\\DeepGaurd AI-Multimodel Authenticity Platfrom\\DeepGuard-AI\\ai\\models\\efficientnet_b0_v2_finetuned.pth",
+  "upgraded_exists": true,
+  "original_eval_corpus": {
+    "accuracy": 0.53,
+    "precision": 0.5882,
+    "recall": 0.2,
+    "f1_score": 0.2985,
+    "roc_auc": 0.6048,
+    "specificity": 0.86,
+    "fpr": 0.14,
+    "fnr": 0.8,
+    "tp": 10,
+    "tn": 43,
+    "fp": 7,
+    "fn": 40,
+    "total": 100,
+    "avg_latency_ms": 78.19
+  },
+  "original_test_set": {
+    "accuracy": 0.4727,
+    "precision": 0.35,
+    "recall": 0.1867,
+    "f1_score": 0.2435,
+    "roc_auc": 0.4028,
+    "specificity": 0.7111,
+    "fpr": 0.2889,
+    "fnr": 0.8133,
+    "tp": 14,
+    "tn": 64,
+    "fp": 26,
+    "fn": 61,
+    "total": 165,
+    "avg_latency_ms": 631.77
+  },
+  "upgraded_eval_corpus": {
+    "accuracy": 0.17,
+    "precision": 0.2462,
+    "recall": 0.32,
+    "f1_score": 0.2783,
+    "roc_auc": 0.0848,
+    "specificity": 0.02,
+    "fpr": 0.98,
+    "fnr": 0.68,
+    "tp": 16,
+    "tn": 1,
+    "fp": 49,
+    "fn": 34,
+    "total": 100,
+    "avg_latency_ms": 63.16
+  },
+  "upgraded_test_set": {
+    "accuracy": 0.8061,
+    "precision": 0.7216,
+    "recall": 0.9333,
+    "f1_score": 0.814,
+    "roc_auc": 0.9027,
+    "specificity": 0.7,
+    "fpr": 0.3,
+    "fnr": 0.0667,
+    "tp": 70,
+    "tn": 63,
+    "fp": 27,
+    "fn": 5,
+    "total": 165,
+    "avg_latency_ms": 433.59
+  },
+  "comparison": {
+    "accuracy": {
+      "original": 0.53,
+      "upgraded": 0.17,
+      "delta": -0.36,
+      "direction": "DOWN"
+    },
+    "precision": {
+      "original": 0.5882,
+      "upgraded": 0.2462,
+      "delta": -0.342,
+      "direction": "DOWN"
+    },
+    "recall": {
+      "original": 0.2,
+      "upgraded": 0.32,
+      "delta": 0.12,
+      "direction": "UP"
+    },
+    "f1_score": {
+      "original": 0.2985,
+      "upgraded": 0.2783,
+      "delta": -0.0202,
+      "direction": "DOWN"
+    },
+    "roc_auc": {
+      "original": 0.6048,
+      "upgraded": 0.0848,
+      "delta": -0.52,
+      "direction": "DOWN"
+    },
+    "specificity": {
+      "original": 0.86,
+      "upgraded": 0.02,
+      "delta": -0.84,
+      "direction": "DOWN"
+    },
+    "fpr": {
+      "original": 0.14,
+      "upgraded": 0.98,
+      "delta": 0.84,
+      "direction": "DOWN"
+    },
+    "fnr": {
+      "original": 0.8,
+      "upgraded": 0.68,
+      "delta": -0.12,
+      "direction": "UP"
+    }
+  },
+  "morphing_detector": {
+    "accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0,
+    "roc_auc": 0.4618,
+    "specificity": 1.0,
+    "fpr": 0.0,
+    "fnr": 1.0,
+    "tp": 0,
+    "tn": 50,
+    "fp": 0,
+    "fn": 50,
+    "total": 100
+  }
+}

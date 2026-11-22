@@ -405,6 +405,15 @@ fun OverviewTab(detail: AnalysisDetailOut) {
                 if (result?.spectralAnomalyScore != null) {
                     MetaRow("Spectral Anomaly Score", "${"%.4f".format(result.spectralAnomalyScore)}")
                 }
+                if (result?.splicingScore != null) {
+                    MetaRow("Audio Splicing Score", "${"%.4f".format(result.splicingScore)}")
+                }
+                if (result?.replayAttackScore != null) {
+                    MetaRow("Replay Attack Score", "${"%.4f".format(result.replayAttackScore)}")
+                }
+                if (result?.morphingScore != null) {
+                    MetaRow("Morphing / Face-Swap Score", "${"%.4f".format(result.morphingScore)}")
+                }
                 if (detail.durationSeconds != null) {
                     MetaRow("Audio Duration", "${"%.2f".format(detail.durationSeconds)}s")
                 }

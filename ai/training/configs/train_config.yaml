@@ -1,0 +1,72 @@
+# DeepGuard AI — Fine-Tuning Configuration
+# Model: EfficientNet-B0 transfer learning from FaceForensics++ C23
+
+model:
+  architecture: "efficientnet_b0"
+  num_classes: 2                    # [Real=0, Fake=1]
+  pretrained_checkpoint: "ai/models/efficientnet_b0_ffpp_c23.pth"
+  output_checkpoint: "ai/models/efficientnet_b0_v2_finetuned.pth"
+  original_backup: "model_checkpoints/efficientnet_b0_ffpp_c23_ORIGINAL.pth"
+
+dataset:
+  train_dir: "ai/datasets/train"
+  val_dir: "ai/datasets/val"
+  test_dir: "ai/datasets/test"
+  image_size: 224
+  # ImageNet normalization (same as original training)
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+
+training:
+  batch_size: 16
+  num_workers: 4
+  epochs: 30
+  early_stopping_patience: 7
+  # Transfer learning strategy
+  freeze_strategy: "progressive"     # freeze early layers first
+  initial_frozen_layers: 6           # freeze first 6 of 9 feature blocks
+  unfreeze_after_epoch: 5            # unfreeze more layers after epoch 5
+  # Optimizer
+  optimizer: "adamw"
+  learning_rate: 0.0001              # low LR for fine-tuning
+  weight_decay: 0.01
+  # LR scheduling
+  scheduler: "cosine_annealing_warm_restarts"
+  warmup_epochs: 2
+  min_lr: 0.000001
+  # Class balancing
+  use_class_weights: true
+  # Gradient clipping
+  max_grad_norm: 1.0
+
+augmentation:
+  # Training augmentations
+  horizontal_flip: true
+  random_rotation: 10                # degrees
+  color_jitter:
+    brightness: 0.2
+    contrast: 0.2
+    saturation: 0.1
+    hue: 0.05
+  random_resized_crop:
+    scale: [0.85, 1.0]
+    ratio: [0.9, 1.1]
+  gaussian_blur_prob: 0.1
+  jpeg_compression_prob: 0.15
+  jpeg_quality_range: [65, 95]
+  random_erasing_prob: 0.05
+  # Validation: NO augmentation (only resize + normalize)
+
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - roc_auc
+    - confusion_matrix
+  save_best_metric: "f1_score"       # save checkpoint with best F1
+  threshold: 0.5
+
+device: "auto"                       # "auto" | "cpu" | "cuda"
+seed: 42

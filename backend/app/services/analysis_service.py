@@ -294,6 +294,11 @@ def _run_image_analysis(
             face_manipulation_score=result.face_manipulation_score,
             gan_artifact_score=result.gan_artifact_score,
             spectral_anomaly_score=result.spectral_anomaly_score,
+            # v2 morphing scores
+            morphing_score=getattr(result, "morphing_score", None),
+            boundary_discontinuity_score=getattr(result, "boundary_discontinuity_score", None),
+            lbp_entropy_score=getattr(result, "lbp_entropy_score", None),
+            color_mismatch_score=getattr(result, "color_mismatch_score", None),
         )
         db.add(analysis_result)
 
@@ -478,6 +483,8 @@ def _run_async_analysis_task(
         try:
             if media_type == "video":
                 result = run_video_inference(file_path)
+                if hasattr(result, "duration_seconds") and result.duration_seconds:
+                    analysis.duration_seconds = result.duration_seconds
             elif media_type == "audio":
                 try:
                     from .audio_preprocessor import load_audio_file
@@ -509,6 +516,11 @@ def _run_async_analysis_task(
                 temporal_inconsistency_score=result.temporal_inconsistency_score,
                 voice_cloning_score=result.voice_cloning_score,
                 spectral_anomaly_score=result.spectral_anomaly_score,
+                # v2 morphing scores
+                morphing_score=getattr(result, "morphing_score", None),
+                boundary_discontinuity_score=getattr(result, "boundary_discontinuity_score", None),
+                lbp_entropy_score=getattr(result, "lbp_entropy_score", None),
+                color_mismatch_score=getattr(result, "color_mismatch_score", None),
             )
             db.add(analysis_result)
 
@@ -519,6 +531,8 @@ def _run_async_analysis_task(
                     indicator_type=ind.indicator_type,
                     description=ind.description,
                     severity=IndicatorSeverity(ind.severity),
+                    timestamp_seconds=getattr(ind, "timestamp_seconds", None),
+                    frame_number=getattr(ind, "frame_number", None),
                     region_x=ind.region_x,
                     region_y=ind.region_y,
                     region_w=ind.region_w,

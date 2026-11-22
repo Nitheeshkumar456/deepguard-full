@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-11-19 20:31:49",
+  "dataset": {
+    "train_real": 748,
+    "train_fake": 748,
+    "val_samples": 384,
+    "test_samples": 384,
+    "total_samples": 2264
+  },
+  "training_config": {
+    "epochs": 6,
+    "batch_size": 16,
+    "lr": 0.0001,
+    "device": "cpu",
+    "checkpoint": "C:\\Final_year_projects\\DeepGaurd AI-Multimodel Authenticity Platfrom\\DeepGuard-AI\\ai\\models\\efficientnet_b0_v4_expanded_2k.pth"
+  },
+  "original_model_metrics": {
+    "loss": 40.132007993757725,
+    "accuracy": 0.4765625,
+    "precision": 0.6010362694300518,
+    "recall": 0.48333333333333334,
+    "f1_score": 0.535796766743649,
+    "roc_auc": 0.4868634259259259,
+    "specificity": 0.4652777777777778,
+    "fpr": 0.5347222222222222,
+    "fnr": 0.5166666666666667,
+    "tp": 116,
+    "tn": 67,
+    "fp": 77,
+    "fn": 124,
+    "total": 384
+  },
+  "upgraded_model_metrics": {
+    "loss": 0.39019079051244415,
+    "accuracy": 0.8723958333333334,
+    "precision": 0.8576779026217228,
+    "recall": 0.9541666666666667,
+    "f1_score": 0.903353057199211,
+    "roc_auc": 0.9523003472222222,
+    "specificity": 0.7361111111111112,
+    "fpr": 0.2638888888888889,
+    "fnr": 0.04583333333333333,
+    "tp": 229,
+    "tn": 106,
+    "fp": 38,
+    "fn": 11,
+    "total": 384
+  },
+  "improvement_delta": {
+    "accuracy": 0.3958,
+    "f1_score": 0.3676,
+    "roc_auc": 0.4654,
+    "precision": 0.2566,
+    "recall": 0.4708
+  }
+}

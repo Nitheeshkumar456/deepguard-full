@@ -11,7 +11,29 @@ _BACKEND_ENV = os.path.join(_BACKEND_DIR, ".env")
 _ROOT_ENV = os.path.join(_PROJECT_ROOT, ".env")
 _DEFAULT_DB_FILE = os.path.join(_BACKEND_DIR, "deepguard.db").replace("\\", "/")
 _DEFAULT_DATABASE_URL = f"sqlite:///{_DEFAULT_DB_FILE}"
-_DEFAULT_MODEL_PATH = os.path.join(_PROJECT_ROOT, "ai", "models", "efficientnet_b0_ffpp_c23.pth")
+
+# Auto-select model version: v5 video, then v4 expanded 2k, then v3 multimodal, then v2 finetuned, then original checkpoint
+_V5_MODEL_PATH = os.path.join(_PROJECT_ROOT, "ai", "models", "efficientnet_b0_v5_video.pth")
+_V4_MODEL_PATH = os.path.join(_PROJECT_ROOT, "ai", "models", "efficientnet_b0_v4_expanded_2k.pth")
+_V3_MODEL_PATH = os.path.join(_PROJECT_ROOT, "ai", "models", "efficientnet_b0_v3_multimodal.pth")
+_V2_MODEL_PATH = os.path.join(_PROJECT_ROOT, "ai", "models", "efficientnet_b0_v2_finetuned.pth")
+_ORIG_MODEL_PATH = os.path.join(_PROJECT_ROOT, "ai", "models", "efficientnet_b0_ffpp_c23.pth")
+
+if os.path.isfile(_V5_MODEL_PATH):
+    _DEFAULT_MODEL_PATH = _V5_MODEL_PATH
+    _DEFAULT_MODEL_NAME = "EfficientNet-B0-v5-Video"
+elif os.path.isfile(_V4_MODEL_PATH):
+    _DEFAULT_MODEL_PATH = _V4_MODEL_PATH
+    _DEFAULT_MODEL_NAME = "EfficientNet-B0-v4-2k"
+elif os.path.isfile(_V3_MODEL_PATH):
+    _DEFAULT_MODEL_PATH = _V3_MODEL_PATH
+    _DEFAULT_MODEL_NAME = "EfficientNet-B0-v3"
+elif os.path.isfile(_V2_MODEL_PATH):
+    _DEFAULT_MODEL_PATH = _V2_MODEL_PATH
+    _DEFAULT_MODEL_NAME = "EfficientNet-B0-v2"
+else:
+    _DEFAULT_MODEL_PATH = _ORIG_MODEL_PATH
+    _DEFAULT_MODEL_NAME = "EfficientNet-B0"
 _DEFAULT_UPLOAD_DIR = os.path.join(_BACKEND_DIR, "uploads")
 
 
@@ -46,7 +68,28 @@ class Settings(BaseSettings):
     AI_MODEL_PATH: str = _DEFAULT_MODEL_PATH
     AI_INFERENCE_TIMEOUT: int = 30       # seconds
     AI_DEVICE: str = "auto"              # "auto" | "cpu" | "cuda"
-    AI_MODEL_NAME: str = "EfficientNet-B0"
+    AI_MODEL_NAME: str = _DEFAULT_MODEL_NAME
+
+    @field_validator("AI_MODEL_PATH", mode="before")
+    @classmethod
+    def resolve_ai_model_path(cls, v: Optional[str]) -> str:
+        if not v:
+            return _DEFAULT_MODEL_PATH
+        v_str = str(v).strip().strip("'\"")
+        if os.path.isabs(v_str) and os.path.isfile(v_str):
+            return v_str
+        # Check relative to backend dir (e.g. "../ai/models/...")
+        candidate_from_backend = os.path.normpath(os.path.join(_BACKEND_DIR, v_str))
+        if os.path.isfile(candidate_from_backend):
+            return candidate_from_backend
+        # Check relative to project root (e.g. "ai/models/...")
+        candidate_from_root = os.path.normpath(os.path.join(_PROJECT_ROOT, v_str))
+        if os.path.isfile(candidate_from_root):
+            return candidate_from_root
+        # Check if v2 default exists
+        if os.path.isfile(_V2_MODEL_PATH):
+            return _V2_MODEL_PATH
+        return _DEFAULT_MODEL_PATH
 
     # ── Email / SMTP Configuration ──────────────────────────────────────────
     # Gmail: use SMTP_HOST=smtp.gmail.com, SMTP_PORT=587 (or 465 for SSL)
