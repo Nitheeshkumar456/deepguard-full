@@ -1,0 +1,201 @@
+Test Case ID,Sample Category,File Name,Dataset Source,Ground Truth,Model Prediction,Authentic Confidence,Synthetic Score,Morphing Discontinuity,LBP Entropy Score,Color Mismatch Score,Inference Latency (ms),Status
+DG-IMG-001,Genuine Photo,real_001_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9672,0.0328,0.0143,0.0723,0.0412,38.2,PASS
+DG-IMG-002,Genuine Photo,real_002_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9706,0.0294,0.1617,0.0365,0.0691,19.3,PASS
+DG-IMG-003,Genuine Photo,real_003_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9296,0.0704,0.0959,0.025,0.0378,35.9,PASS
+DG-IMG-004,Genuine Photo,real_004_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9588,0.0412,0.0475,0.132,0.1233,18.7,PASS
+DG-IMG-005,Genuine Photo,real_005_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9821,0.0179,0.1287,0.0846,0.0318,44.1,PASS
+DG-IMG-006,Genuine Photo,real_006_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9401,0.0599,0.0258,0.0384,0.1286,34.6,PASS
+DG-IMG-007,Genuine Photo,real_007_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9822,0.0178,0.1341,0.1219,0.1462,28.6,PASS
+DG-IMG-008,Genuine Photo,real_008_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9594,0.0406,0.151,0.1375,0.1306,33.9,PASS
+DG-IMG-009,Genuine Photo,real_009_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9731,0.0269,0.0178,0.0633,0.0505,20.6,PASS
+DG-IMG-010,Genuine Photo,real_010_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9308,0.0692,0.0272,0.0728,0.099,28.2,PASS
+DG-IMG-011,Genuine Photo,real_011_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9431,0.0569,0.0456,0.0707,0.1411,35.8,PASS
+DG-IMG-012,Genuine Photo,real_012_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9645,0.0355,0.0391,0.1585,0.0329,28.6,PASS
+DG-IMG-013,Genuine Photo,real_013_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9986,0.0014,0.1188,0.1258,0.1058,41.0,PASS
+DG-IMG-014,Genuine Photo,real_014_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9795,0.0205,0.0489,0.0261,0.0542,25.6,PASS
+DG-IMG-015,Genuine Photo,real_015_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9289,0.0711,0.1703,0.1865,0.0541,36.0,PASS
+DG-IMG-016,Genuine Photo,real_016_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9454,0.0546,0.1655,0.1072,0.0471,25.1,PASS
+DG-IMG-017,Genuine Photo,real_017_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9602,0.0398,0.0547,0.1311,0.1357,29.2,PASS
+DG-IMG-018,Genuine Photo,real_018_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9296,0.0704,0.1796,0.1168,0.0227,19.8,PASS
+DG-IMG-019,Genuine Photo,real_019_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9198,0.0802,0.1167,0.1705,0.0691,20.2,PASS
+DG-IMG-020,Genuine Photo,real_020_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9442,0.0558,0.1793,0.1205,0.146,41.5,PASS
+DG-IMG-021,Genuine Photo,real_021_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.911,0.089,0.1325,0.1495,0.0852,25.6,PASS
+DG-IMG-022,Genuine Photo,real_022_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9674,0.0326,0.029,0.1026,0.0735,44.0,PASS
+DG-IMG-023,Genuine Photo,real_023_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9884,0.0116,0.0548,0.1151,0.035,42.9,PASS
+DG-IMG-024,Genuine Photo,real_024_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9879,0.0121,0.0607,0.1414,0.0953,22.6,PASS
+DG-IMG-025,Genuine Photo,real_025_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9782,0.0218,0.1017,0.1679,0.0842,18.5,PASS
+DG-IMG-026,Genuine Photo,real_026_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.939,0.061,0.0133,0.1965,0.133,40.7,PASS
+DG-IMG-027,Genuine Photo,real_027_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9375,0.0625,0.0198,0.1868,0.1426,20.8,PASS
+DG-IMG-028,Genuine Photo,real_028_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9535,0.0465,0.0218,0.1645,0.1172,21.9,PASS
+DG-IMG-029,Genuine Photo,real_029_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9525,0.0475,0.1035,0.0704,0.1321,29.8,PASS
+DG-IMG-030,Genuine Photo,real_030_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.929,0.071,0.1017,0.1587,0.0382,26.8,PASS
+DG-IMG-031,Genuine Photo,real_031_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9991,0.0009,0.1205,0.1032,0.0825,21.7,PASS
+DG-IMG-032,Genuine Photo,real_032_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9301,0.0699,0.0675,0.1318,0.0422,24.4,PASS
+DG-IMG-033,Genuine Photo,real_033_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9164,0.0836,0.1173,0.0635,0.1368,41.5,PASS
+DG-IMG-034,Genuine Photo,real_034_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9163,0.0837,0.0505,0.1471,0.04,22.0,PASS
+DG-IMG-035,Genuine Photo,real_035_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9937,0.0063,0.1071,0.1098,0.1198,40.1,PASS
+DG-IMG-036,Genuine Photo,real_036_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.927,0.073,0.0265,0.1019,0.0693,31.0,PASS
+DG-IMG-037,Genuine Photo,real_037_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9753,0.0247,0.1245,0.207,0.0238,29.2,PASS
+DG-IMG-038,Genuine Photo,real_038_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9404,0.0596,0.1565,0.0672,0.0366,30.5,PASS
+DG-IMG-039,Genuine Photo,real_039_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9478,0.0522,0.0574,0.0675,0.1393,30.3,PASS
+DG-IMG-040,Genuine Photo,real_040_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9871,0.0129,0.1036,0.0296,0.1499,40.8,PASS
+DG-IMG-041,Genuine Photo,real_041_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9967,0.0033,0.1675,0.1813,0.0333,31.5,PASS
+DG-IMG-042,Genuine Photo,real_042_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9291,0.0709,0.0782,0.0311,0.0631,44.8,PASS
+DG-IMG-043,Genuine Photo,real_043_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9337,0.0663,0.1433,0.1065,0.0692,44.1,PASS
+DG-IMG-044,Genuine Photo,real_044_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9991,0.0009,0.1045,0.1565,0.0317,26.4,PASS
+DG-IMG-045,Genuine Photo,real_045_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9967,0.0033,0.1085,0.123,0.1147,20.0,PASS
+DG-IMG-046,Genuine Photo,real_046_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9623,0.0377,0.0955,0.182,0.032,44.2,PASS
+DG-IMG-047,Genuine Photo,real_047_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9172,0.0828,0.0416,0.1331,0.1045,24.8,PASS
+DG-IMG-048,Genuine Photo,real_048_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9207,0.0793,0.1613,0.0668,0.0932,35.0,PASS
+DG-IMG-049,Genuine Photo,real_049_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9475,0.0525,0.1092,0.1193,0.1409,24.0,PASS
+DG-IMG-050,Genuine Photo,real_050_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9741,0.0259,0.0506,0.0952,0.104,26.5,PASS
+DG-IMG-051,Genuine Photo,real_051_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9383,0.0617,0.1378,0.0338,0.0742,45.2,PASS
+DG-IMG-052,Genuine Photo,real_052_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9992,0.0008,0.0225,0.0605,0.0471,43.4,PASS
+DG-IMG-053,Genuine Photo,real_053_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9888,0.0112,0.1595,0.0902,0.0321,40.8,PASS
+DG-IMG-054,Genuine Photo,real_054_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.973,0.027,0.114,0.2076,0.1016,18.7,PASS
+DG-IMG-055,Genuine Photo,real_055_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9831,0.0169,0.0609,0.146,0.1415,22.1,PASS
+DG-IMG-056,Genuine Photo,real_056_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9203,0.0797,0.0282,0.1251,0.0481,34.6,PASS
+DG-IMG-057,Genuine Photo,real_057_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9742,0.0258,0.0446,0.1405,0.047,31.5,PASS
+DG-IMG-058,Genuine Photo,real_058_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.991,0.009,0.1538,0.0375,0.0693,25.9,PASS
+DG-IMG-059,Genuine Photo,real_059_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9103,0.0897,0.1411,0.1411,0.0467,38.3,PASS
+DG-IMG-060,Genuine Photo,real_060_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9594,0.0406,0.0827,0.0218,0.0205,42.1,PASS
+DG-IMG-061,Genuine Photo,real_061_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9909,0.0091,0.1028,0.1786,0.0916,22.5,PASS
+DG-IMG-062,Genuine Photo,real_062_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9214,0.0786,0.0624,0.1908,0.1215,41.5,PASS
+DG-IMG-063,Genuine Photo,real_063_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9905,0.0095,0.0457,0.0674,0.0244,39.3,PASS
+DG-IMG-064,Genuine Photo,real_064_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9891,0.0109,0.0791,0.1379,0.0316,43.3,PASS
+DG-IMG-065,Genuine Photo,real_065_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9874,0.0126,0.176,0.174,0.1334,19.2,PASS
+DG-IMG-066,Genuine Photo,real_066_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9759,0.0241,0.0665,0.1969,0.1223,41.6,PASS
+DG-IMG-067,Genuine Photo,real_067_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9826,0.0174,0.0554,0.1696,0.0251,41.8,PASS
+DG-IMG-068,Genuine Photo,real_068_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9868,0.0132,0.0478,0.1752,0.0744,26.6,PASS
+DG-IMG-069,Genuine Photo,real_069_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9812,0.0188,0.0487,0.0245,0.037,27.3,PASS
+DG-IMG-070,Genuine Photo,real_070_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9874,0.0126,0.1744,0.073,0.0998,29.2,PASS
+DG-IMG-071,Genuine Photo,real_071_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9978,0.0022,0.1012,0.1985,0.0261,44.4,PASS
+DG-IMG-072,Genuine Photo,real_072_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.926,0.074,0.1736,0.0704,0.0252,30.1,PASS
+DG-IMG-073,Genuine Photo,real_073_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9752,0.0248,0.0633,0.1352,0.0816,28.8,PASS
+DG-IMG-074,Genuine Photo,real_074_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9616,0.0384,0.0533,0.1547,0.0102,43.2,PASS
+DG-IMG-075,Genuine Photo,real_075_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9582,0.0418,0.1323,0.161,0.1039,28.2,PASS
+DG-IMG-076,Genuine Photo,real_076_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9163,0.0837,0.1229,0.0827,0.0539,41.1,PASS
+DG-IMG-077,Genuine Photo,real_077_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9744,0.0256,0.0611,0.0788,0.0672,29.2,PASS
+DG-IMG-078,Genuine Photo,real_078_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9365,0.0635,0.0316,0.0999,0.1417,36.6,PASS
+DG-IMG-079,Genuine Photo,real_079_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9908,0.0092,0.1146,0.0772,0.0867,18.5,PASS
+DG-IMG-080,Genuine Photo,real_080_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9357,0.0643,0.0831,0.1302,0.1017,30.9,PASS
+DG-IMG-081,Genuine Photo,real_081_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9496,0.0504,0.0463,0.1099,0.1362,39.8,PASS
+DG-IMG-082,Genuine Photo,real_082_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9252,0.0748,0.0244,0.1179,0.0986,27.4,PASS
+DG-IMG-083,Genuine Photo,real_083_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9832,0.0168,0.1377,0.1478,0.0414,23.8,PASS
+DG-IMG-084,Genuine Photo,real_084_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9122,0.0878,0.0516,0.1103,0.129,20.4,PASS
+DG-IMG-085,Genuine Photo,real_085_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9471,0.0529,0.1171,0.0569,0.1075,31.7,PASS
+DG-IMG-086,Genuine Photo,real_086_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9318,0.0682,0.1215,0.0211,0.1151,39.1,PASS
+DG-IMG-087,Genuine Photo,real_087_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9195,0.0805,0.0823,0.0534,0.1441,32.3,PASS
+DG-IMG-088,Genuine Photo,real_088_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9145,0.0855,0.0524,0.1812,0.0739,39.9,PASS
+DG-IMG-089,Genuine Photo,real_089_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9697,0.0303,0.1779,0.1331,0.143,42.3,PASS
+DG-IMG-090,Genuine Photo,real_090_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9648,0.0352,0.1323,0.1159,0.1263,33.1,PASS
+DG-IMG-091,Genuine Photo,real_091_f0001.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9903,0.0097,0.1364,0.1102,0.0463,25.1,PASS
+DG-IMG-092,Genuine Photo,real_092_f0002.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9671,0.0329,0.1402,0.119,0.0977,25.8,PASS
+DG-IMG-093,Genuine Photo,real_093_f0003.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9169,0.0831,0.0586,0.0716,0.0548,32.9,PASS
+DG-IMG-094,Genuine Photo,real_094_f0004.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9224,0.0776,0.0493,0.1519,0.1089,20.2,PASS
+DG-IMG-095,Genuine Photo,real_095_f0005.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9465,0.0535,0.1022,0.099,0.039,29.7,PASS
+DG-IMG-096,Genuine Photo,real_096_f0006.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.991,0.009,0.1093,0.1521,0.1299,38.9,PASS
+DG-IMG-097,Genuine Photo,real_097_f0007.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.944,0.056,0.011,0.0868,0.1155,41.3,PASS
+DG-IMG-098,Genuine Photo,real_098_f0008.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9953,0.0047,0.0812,0.162,0.0865,34.6,PASS
+DG-IMG-099,Genuine Photo,real_099_f0009.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9297,0.0703,0.0473,0.1028,0.0141,27.5,PASS
+DG-IMG-100,Genuine Photo,real_100_f0000.jpg,Expanded-2k YouTube/FF++ Authentic,Authentic,Authentic,0.9708,0.0292,0.0787,0.0514,0.0754,21.9,PASS
+DG-IMG-101,Deepfake / FaceSwap / Morph,manip_001_901_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0284,0.9716,0.6882,0.7461,0.7588,22.8,PASS
+DG-IMG-102,Deepfake / FaceSwap / Morph,manip_002_902_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0269,0.9731,0.7214,0.7677,0.5686,33.4,PASS
+DG-IMG-103,Deepfake / FaceSwap / Morph,manip_003_903_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0591,0.9409,0.7797,0.8636,0.6903,44.6,PASS
+DG-IMG-104,Deepfake / FaceSwap / Morph,manip_004_904_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0127,0.9873,0.7569,0.6462,0.5572,38.2,PASS
+DG-IMG-105,Deepfake / FaceSwap / Morph,manip_005_905_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0001,0.9999,0.7867,0.828,0.8391,41.6,PASS
+DG-IMG-106,Deepfake / FaceSwap / Morph,manip_006_906_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0185,0.9815,0.9696,0.6838,0.5575,26.6,PASS
+DG-IMG-107,Deepfake / FaceSwap / Morph,manip_007_907_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0655,0.9345,0.8842,0.8005,0.6306,43.0,PASS
+DG-IMG-108,Deepfake / FaceSwap / Morph,manip_008_908_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0176,0.9824,0.7312,0.8143,0.8267,25.4,PASS
+DG-IMG-109,Deepfake / FaceSwap / Morph,manip_009_909_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0136,0.9864,0.9742,0.6546,0.5595,31.4,PASS
+DG-IMG-110,Deepfake / FaceSwap / Morph,manip_010_910_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0243,0.9757,0.9722,0.7469,0.8146,24.3,PASS
+DG-IMG-111,Deepfake / FaceSwap / Morph,manip_011_911_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0233,0.9767,0.8713,0.6526,0.8358,47.5,PASS
+DG-IMG-112,Deepfake / FaceSwap / Morph,manip_012_912_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.03,0.97,0.7169,0.9348,0.8396,32.4,PASS
+DG-IMG-113,Deepfake / FaceSwap / Morph,manip_013_913_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0429,0.9571,0.793,0.7819,0.6763,47.5,PASS
+DG-IMG-114,Deepfake / FaceSwap / Morph,manip_014_914_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0134,0.9866,0.7122,0.9275,0.7852,46.9,PASS
+DG-IMG-115,Deepfake / FaceSwap / Morph,manip_015_915_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.022,0.978,0.8128,0.8548,0.9072,30.1,PASS
+DG-IMG-116,Deepfake / FaceSwap / Morph,manip_016_916_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0145,0.9855,0.8441,0.7747,0.7112,43.9,PASS
+DG-IMG-117,Deepfake / FaceSwap / Morph,manip_017_917_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0549,0.9451,0.9398,0.8858,0.5821,48.4,PASS
+DG-IMG-118,Deepfake / FaceSwap / Morph,manip_018_918_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0567,0.9433,0.8217,0.8153,0.6902,22.9,PASS
+DG-IMG-119,Deepfake / FaceSwap / Morph,manip_019_919_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0113,0.9887,0.7355,0.6879,0.8452,32.2,PASS
+DG-IMG-120,Deepfake / FaceSwap / Morph,manip_020_920_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0091,0.9909,0.8939,0.7084,0.5538,50.4,PASS
+DG-IMG-121,Deepfake / FaceSwap / Morph,manip_021_921_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0686,0.9314,0.8996,0.7763,0.8305,42.7,PASS
+DG-IMG-122,Deepfake / FaceSwap / Morph,manip_022_922_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0266,0.9734,0.8297,0.8737,0.5844,28.6,PASS
+DG-IMG-123,Deepfake / FaceSwap / Morph,manip_023_923_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0232,0.9768,0.7734,0.8061,0.7251,37.9,PASS
+DG-IMG-124,Deepfake / FaceSwap / Morph,manip_024_924_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0431,0.9569,0.9075,0.7259,0.8101,30.1,PASS
+DG-IMG-125,Deepfake / FaceSwap / Morph,manip_025_925_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0562,0.9438,0.7168,0.6816,0.5942,38.1,PASS
+DG-IMG-126,Deepfake / FaceSwap / Morph,manip_026_926_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0179,0.9821,0.7365,0.6892,0.7292,43.7,PASS
+DG-IMG-127,Deepfake / FaceSwap / Morph,manip_027_927_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0019,0.9981,0.84,0.7106,0.5872,27.8,PASS
+DG-IMG-128,Deepfake / FaceSwap / Morph,manip_028_928_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.058,0.942,0.7347,0.6245,0.7476,30.2,PASS
+DG-IMG-129,Deepfake / FaceSwap / Morph,manip_029_929_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.002,0.998,0.8488,0.8432,0.5967,48.1,PASS
+DG-IMG-130,Deepfake / FaceSwap / Morph,manip_030_930_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0382,0.9618,0.9462,0.8037,0.7237,35.2,PASS
+DG-IMG-131,Deepfake / FaceSwap / Morph,manip_031_931_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0612,0.9388,0.6957,0.9211,0.7268,46.7,PASS
+DG-IMG-132,Deepfake / FaceSwap / Morph,manip_032_932_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.045,0.955,0.7026,0.8214,0.5698,26.5,PASS
+DG-IMG-133,Deepfake / FaceSwap / Morph,manip_033_933_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0328,0.9672,0.7727,0.9381,0.5938,44.9,PASS
+DG-IMG-134,Deepfake / FaceSwap / Morph,manip_034_934_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0296,0.9704,0.9212,0.6922,0.7434,35.5,PASS
+DG-IMG-135,Deepfake / FaceSwap / Morph,manip_035_935_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0418,0.9582,0.9424,0.9368,0.663,40.6,PASS
+DG-IMG-136,Deepfake / FaceSwap / Morph,manip_036_936_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0293,0.9707,0.9057,0.9232,0.6269,28.3,PASS
+DG-IMG-137,Deepfake / FaceSwap / Morph,manip_037_937_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0255,0.9745,0.7279,0.6756,0.5778,22.1,PASS
+DG-IMG-138,Deepfake / FaceSwap / Morph,manip_038_938_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0413,0.9587,0.8611,0.7132,0.6356,43.2,PASS
+DG-IMG-139,Deepfake / FaceSwap / Morph,manip_039_939_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0223,0.9777,0.8185,0.84,0.8918,45.6,PASS
+DG-IMG-140,Deepfake / FaceSwap / Morph,manip_040_940_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0282,0.9718,0.8817,0.9188,0.7073,38.3,PASS
+DG-IMG-141,Deepfake / FaceSwap / Morph,manip_041_941_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0265,0.9735,0.9571,0.8845,0.5764,27.0,PASS
+DG-IMG-142,Deepfake / FaceSwap / Morph,manip_042_942_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.052,0.948,0.9084,0.8021,0.6568,25.7,PASS
+DG-IMG-143,Deepfake / FaceSwap / Morph,manip_043_943_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0234,0.9766,0.8934,0.9217,0.7352,36.8,PASS
+DG-IMG-144,Deepfake / FaceSwap / Morph,manip_044_944_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.069,0.931,0.6922,0.7582,0.6693,29.5,PASS
+DG-IMG-145,Deepfake / FaceSwap / Morph,manip_045_945_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0682,0.9318,0.9734,0.8875,0.7628,50.5,PASS
+DG-IMG-146,Deepfake / FaceSwap / Morph,manip_046_946_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0001,0.9999,0.885,0.7062,0.5649,44.7,PASS
+DG-IMG-147,Deepfake / FaceSwap / Morph,manip_047_947_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0398,0.9602,0.8787,0.9131,0.6172,39.6,PASS
+DG-IMG-148,Deepfake / FaceSwap / Morph,manip_048_948_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0275,0.9725,0.83,0.6492,0.6787,32.0,PASS
+DG-IMG-149,Deepfake / FaceSwap / Morph,manip_049_949_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0248,0.9752,0.9416,0.7255,0.8067,30.6,PASS
+DG-IMG-150,Deepfake / FaceSwap / Morph,manip_050_950_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0042,0.9958,0.9281,0.796,0.7183,31.4,PASS
+DG-IMG-151,Deepfake / FaceSwap / Morph,manip_051_951_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0508,0.9492,0.9759,0.7493,0.7404,51.6,PASS
+DG-IMG-152,Deepfake / FaceSwap / Morph,manip_052_952_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0257,0.9743,0.8455,0.7522,0.6194,32.9,PASS
+DG-IMG-153,Deepfake / FaceSwap / Morph,manip_053_953_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0183,0.9817,0.8707,0.8632,0.6253,38.5,PASS
+DG-IMG-154,Deepfake / FaceSwap / Morph,manip_054_954_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0055,0.9945,0.8136,0.8434,0.5949,51.2,PASS
+DG-IMG-155,Deepfake / FaceSwap / Morph,manip_055_955_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0294,0.9706,0.753,0.6707,0.7538,38.6,PASS
+DG-IMG-156,Deepfake / FaceSwap / Morph,manip_056_956_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.068,0.932,0.9826,0.9121,0.7207,25.5,PASS
+DG-IMG-157,Deepfake / FaceSwap / Morph,manip_057_957_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0127,0.9873,0.832,0.8493,0.7383,30.2,PASS
+DG-IMG-158,Deepfake / FaceSwap / Morph,manip_058_958_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0125,0.9875,0.979,0.698,0.754,33.5,PASS
+DG-IMG-159,Deepfake / FaceSwap / Morph,manip_059_959_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.006,0.994,0.835,0.9014,0.8697,30.3,PASS
+DG-IMG-160,Deepfake / FaceSwap / Morph,manip_060_960_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0158,0.9842,0.8066,0.919,0.7379,46.6,PASS
+DG-IMG-161,Deepfake / FaceSwap / Morph,manip_061_961_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0538,0.9462,0.7711,0.8078,0.9196,36.7,PASS
+DG-IMG-162,Deepfake / FaceSwap / Morph,manip_062_962_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0639,0.9361,0.8443,0.7304,0.7542,38.3,PASS
+DG-IMG-163,Deepfake / FaceSwap / Morph,manip_063_963_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0409,0.9591,0.7781,0.6804,0.8081,39.2,PASS
+DG-IMG-164,Deepfake / FaceSwap / Morph,manip_064_964_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0575,0.9425,0.9165,0.634,0.8255,43.2,PASS
+DG-IMG-165,Deepfake / FaceSwap / Morph,manip_065_965_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0142,0.9858,0.7978,0.8324,0.8537,51.4,PASS
+DG-IMG-166,Deepfake / FaceSwap / Morph,manip_066_966_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0379,0.9621,0.6913,0.7807,0.7684,48.1,PASS
+DG-IMG-167,Deepfake / FaceSwap / Morph,manip_067_967_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0095,0.9905,0.8143,0.7883,0.7191,43.7,PASS
+DG-IMG-168,Deepfake / FaceSwap / Morph,manip_068_968_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0443,0.9557,0.8797,0.6694,0.7237,51.1,PASS
+DG-IMG-169,Deepfake / FaceSwap / Morph,manip_069_969_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0496,0.9504,0.8913,0.8279,0.8652,47.6,PASS
+DG-IMG-170,Deepfake / FaceSwap / Morph,manip_070_970_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0106,0.9894,0.7959,0.7213,0.8159,44.8,PASS
+DG-IMG-171,Deepfake / FaceSwap / Morph,manip_071_971_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0097,0.9903,0.6909,0.6419,0.7835,49.6,PASS
+DG-IMG-172,Deepfake / FaceSwap / Morph,manip_072_972_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0003,0.9997,0.9078,0.7589,0.5864,41.0,PASS
+DG-IMG-173,Deepfake / FaceSwap / Morph,manip_073_973_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0096,0.9904,0.8153,0.8421,0.8843,23.4,PASS
+DG-IMG-174,Deepfake / FaceSwap / Morph,manip_074_974_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0154,0.9846,0.7695,0.7399,0.6039,37.9,PASS
+DG-IMG-175,Deepfake / FaceSwap / Morph,manip_075_975_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0326,0.9674,0.9217,0.6744,0.5792,48.1,PASS
+DG-IMG-176,Deepfake / FaceSwap / Morph,manip_076_976_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0286,0.9714,0.7535,0.9121,0.603,35.8,PASS
+DG-IMG-177,Deepfake / FaceSwap / Morph,manip_077_977_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.056,0.944,0.7579,0.623,0.8477,49.0,PASS
+DG-IMG-178,Deepfake / FaceSwap / Morph,manip_078_978_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0242,0.9758,0.7282,0.7614,0.6779,39.6,PASS
+DG-IMG-179,Deepfake / FaceSwap / Morph,manip_079_979_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0271,0.9729,0.8094,0.7,0.8628,28.0,PASS
+DG-IMG-180,Deepfake / FaceSwap / Morph,manip_080_980_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0462,0.9538,0.8274,0.6959,0.7616,39.2,PASS
+DG-IMG-181,Deepfake / FaceSwap / Morph,manip_081_981_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0006,0.9994,0.77,0.9329,0.7935,30.2,PASS
+DG-IMG-182,Deepfake / FaceSwap / Morph,manip_082_982_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0326,0.9674,0.8892,0.8583,0.5681,40.2,PASS
+DG-IMG-183,Deepfake / FaceSwap / Morph,manip_083_983_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0378,0.9622,0.9558,0.7116,0.8456,40.2,PASS
+DG-IMG-184,Deepfake / FaceSwap / Morph,manip_084_984_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0486,0.9514,0.8742,0.8187,0.8008,43.6,PASS
+DG-IMG-185,Deepfake / FaceSwap / Morph,manip_085_985_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0256,0.9744,0.9357,0.821,0.8843,41.4,PASS
+DG-IMG-186,Deepfake / FaceSwap / Morph,manip_086_986_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0519,0.9481,0.8145,0.8055,0.821,24.7,PASS
+DG-IMG-187,Deepfake / FaceSwap / Morph,manip_087_987_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0529,0.9471,0.908,0.6762,0.5989,38.2,PASS
+DG-IMG-188,Deepfake / FaceSwap / Morph,manip_088_988_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0022,0.9978,0.8419,0.9123,0.8573,29.7,PASS
+DG-IMG-189,Deepfake / FaceSwap / Morph,manip_089_989_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0132,0.9868,0.827,0.8781,0.8262,32.2,PASS
+DG-IMG-190,Deepfake / FaceSwap / Morph,manip_090_990_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0664,0.9336,0.9737,0.665,0.9076,47.8,PASS
+DG-IMG-191,Deepfake / FaceSwap / Morph,manip_091_991_f0001.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0208,0.9792,0.9789,0.9295,0.8477,33.0,PASS
+DG-IMG-192,Deepfake / FaceSwap / Morph,manip_092_992_f0002.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0158,0.9842,0.6842,0.7917,0.7183,42.2,PASS
+DG-IMG-193,Deepfake / FaceSwap / Morph,manip_093_993_f0003.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0246,0.9754,0.8583,0.8832,0.8979,25.3,PASS
+DG-IMG-194,Deepfake / FaceSwap / Morph,manip_094_994_f0004.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0575,0.9425,0.6876,0.903,0.7577,49.5,PASS
+DG-IMG-195,Deepfake / FaceSwap / Morph,manip_095_995_f0005.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0584,0.9416,0.6993,0.8836,0.8865,31.1,PASS
+DG-IMG-196,Deepfake / FaceSwap / Morph,manip_096_996_f0006.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0444,0.9556,0.7226,0.9228,0.6626,36.8,PASS
+DG-IMG-197,Deepfake / FaceSwap / Morph,manip_097_997_f0007.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0677,0.9323,0.9506,0.6634,0.7178,42.1,PASS
+DG-IMG-198,Deepfake / FaceSwap / Morph,manip_098_998_f0008.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0193,0.9807,0.9685,0.7541,0.8246,26.6,PASS
+DG-IMG-199,Deepfake / FaceSwap / Morph,manip_099_999_f0009.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0439,0.9561,0.7102,0.7766,0.701,50.5,PASS
+DG-IMG-200,Deepfake / FaceSwap / Morph,manip_100_1000_f0000.jpg,FaceForensics++ c23 Deepfakes & FaceShifter,Manipulated,Manipulated,0.0725,0.9275,0.793,0.7619,0.9017,47.7,PASS

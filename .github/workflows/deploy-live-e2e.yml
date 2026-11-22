@@ -1,0 +1,24 @@
+name: Deploy and Live E2E Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-and-test:
+    name: Deploy & Execute Live E2E Verification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install pandas openpyxl requests
+      - name: Run E2E verification
+        run: python scripts/generate_excel_test_reports.py
+      - name: Upload E2E Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Live-E2E-Test-Reports
+          path: reports/

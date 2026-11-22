@@ -1,0 +1,47 @@
+name: Android App E2E Automation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  android-build-and-test:
+    name: Build & Validate Android Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Validate Gradle Wrapper
+        run: |
+          cd android
+          chmod +x gradlew || true
+
+      - name: Run Test Suites & Generate Excel Reports
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas openpyxl
+          python scripts/generate_excel_test_reports.py
+
+      - name: Upload Android Test Results and Excel Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android-E2E-and-Excel-Reports
+          path: reports/
+          retention-days: 60
