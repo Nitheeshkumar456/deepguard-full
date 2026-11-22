@@ -284,3 +284,4 @@ function generateHtmlReports(testCases, outputDirs) {
 }
 
 module.exports = { generateHtmlReports };
+

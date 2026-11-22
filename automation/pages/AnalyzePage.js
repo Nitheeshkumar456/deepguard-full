@@ -31,3 +31,4 @@ class AnalyzePage extends BasePage {
 }
 
 module.exports = AnalyzePage;
+

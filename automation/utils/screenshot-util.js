@@ -30,3 +30,4 @@ module.exports = {
   captureScreenshot,
   getScreenshotsDir: () => SCREENSHOTS_DIR
 };
+

@@ -126,3 +126,4 @@ Historical archives structure:
 ```text
 https://Nitheeshkumar456.github.io/deepguard-full/reports/history/build-XXX/execution-report.html
 ```
+

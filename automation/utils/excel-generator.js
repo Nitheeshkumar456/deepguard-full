@@ -157,3 +157,4 @@ function generateExcelReports(testCases, outputDirs) {
 }
 
 module.exports = { generateExcelReports };
+

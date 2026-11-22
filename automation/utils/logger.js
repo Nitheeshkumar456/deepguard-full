@@ -23,3 +23,4 @@ module.exports = {
   debug: (msg) => log('DEBUG', msg),
   getLogPath: () => LOG_FILE
 };
+

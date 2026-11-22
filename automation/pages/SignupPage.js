@@ -24,3 +24,4 @@ class SignupPage extends BasePage {
 }
 
 module.exports = SignupPage;
+

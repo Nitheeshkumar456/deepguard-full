@@ -28,3 +28,4 @@ class DashboardPage extends BasePage {
 }
 
 module.exports = DashboardPage;
+
