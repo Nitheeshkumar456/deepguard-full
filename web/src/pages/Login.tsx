@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { ShieldCheck, Mail, Lock, ArrowRight, Eye, EyeOff, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, User, Mail, Lock, ArrowRight, Eye, EyeOff, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,15 +18,34 @@ export default function Login() {
     setError(null);
 
     // Validation
-    if (!email || !password) {
-      setError("Please enter both email and password.");
+    if (!username.trim() || !password) {
+      setError("Please enter both username and password.");
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address.");
-      return;
+    const trimmed = username.trim();
+    const isEmail = trimmed.includes("@");
+
+    if (isEmail) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(trimmed)) {
+        setError("Please enter a valid email address.");
+        return;
+      }
+    } else {
+      // Username validation: must be at least 3 characters and contain alphabets/letters
+      if (trimmed.length < 3) {
+        setError("Username must be at least 3 characters long.");
+        return;
+      }
+      if (!/[a-zA-Z]/.test(trimmed)) {
+        setError("Username must contain alphabets and letters.");
+        return;
+      }
+      if (!/^[a-zA-Z0-9_.-]+$/.test(trimmed)) {
+        setError("Username can only contain alphabets, letters, numbers, and underscores.");
+        return;
+      }
     }
 
     if (password.length < 8) {
@@ -37,13 +56,13 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await login(email, password);
+      await login(trimmed, password);
       setSuccess(true);
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
     } catch (err: any) {
-      setError(err.message || "Invalid email or password.");
+      setError(err.message || "Invalid username/email or password.");
     } finally {
       setLoading(false);
     }
@@ -91,23 +110,31 @@ export default function Login() {
           )}
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-            {/* Email */}
+            {/* Username or Email */}
             <div>
               <label className="mb-2 block text-sm text-slate-300">
-                Email address
+                Username or Email address
               </label>
               <div className="relative">
-                <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                {username.includes("@") ? (
+                  <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                ) : (
+                  <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                )}
                 <input
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
+                  type="text"
+                  placeholder="Username or you@example.com"
+                  value={username}
                   disabled={loading || success}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="w-full rounded-xl border border-white/10 bg-slate-900/50 px-10 py-3 text-sm text-white outline-none focus:border-violet-500 disabled:opacity-50"
-                  aria-label="Email address"
+                  aria-label="Username or Email address"
+                  autoComplete="username"
                 />
               </div>
+              <p className="mt-1.5 text-xs text-slate-500">
+                Username must contain alphabets and letters (e.g. user123).
+              </p>
             </div>
 
             {/* Password */}

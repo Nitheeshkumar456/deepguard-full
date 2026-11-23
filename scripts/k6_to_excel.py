@@ -73,3 +73,4 @@ for p in [target_file_1, target_file_2]:
         df_ts.to_excel(writer, sheet_name="Second-by-Second Timeseries", index=False)
 
 print(f"Successfully generated load test Excel report: {target_file_1}")
+

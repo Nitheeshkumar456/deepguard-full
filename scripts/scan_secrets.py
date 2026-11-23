@@ -38,3 +38,4 @@ with open(out_file, "w", encoding="utf-8") as f:
     json.dump(findings, f, indent=2)
 
 print(f"Secret scan audit completed. {len(findings)} records indexed to {out_file}")
+

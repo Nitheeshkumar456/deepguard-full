@@ -115,7 +115,14 @@ def register(user_data: UserRegister, request: Request, db: Session = Depends(ge
 @router.post("/login", response_model=Token)
 @limiter.limit("5/minute")
 def login(login_data: UserLogin, request: Request, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == login_data.email).first()
+    from sqlalchemy import or_, func
+    identifier = login_data.email.strip()
+    user = db.query(User).filter(
+        or_(
+            func.lower(User.email) == identifier.lower(),
+            func.lower(User.name) == identifier.lower()
+        )
+    ).first()
     if not user or not verify_password(login_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

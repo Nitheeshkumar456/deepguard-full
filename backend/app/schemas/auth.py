@@ -8,7 +8,7 @@ class UserRegister(BaseModel):
     password: str = Field(..., min_length=8, description="Password of at least 8 characters")
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    email: str = Field(..., description="Email address or username")
     password: str
 
 class Token(BaseModel):

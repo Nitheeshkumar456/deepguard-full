@@ -79,3 +79,4 @@ with open(out_path, "w") as f:
     json.dump(endpoints, f, indent=2)
 
 print(f"Extracted {len(endpoints)} API endpoints to {out_path}")
+
