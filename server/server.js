@@ -88,7 +88,29 @@ const apiProxy = createProxyMiddleware({
   }
 });
 
-app.use('/', apiProxy);
+// Serve built web frontend (React SPA)
+const webDist = path.resolve(__dirname, '..', 'web', 'dist');
+if (fs.existsSync(webDist)) {
+  app.use(express.static(webDist));
+}
+
+// Proxy API and FastAPI routes
+app.use('/api', apiProxy);
+app.use('/docs', apiProxy);
+app.use('/openapi.json', apiProxy);
+app.use('/health', apiProxy);
+app.use('/metrics', apiProxy);
+
+// SPA fallback for frontend routes
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.originalUrl.startsWith('/api') && !req.originalUrl.startsWith('/download-apk') && !req.originalUrl.startsWith('/docs') && !req.originalUrl.startsWith('/openapi.json')) {
+    const indexPath = path.resolve(webDist, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      return res.sendFile(indexPath);
+    }
+  }
+  next();
+});
 
 const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`=======================================================`);
