@@ -30,6 +30,7 @@ async function request<T>(
   if (!headers.has("Content-Type") && !(options.body instanceof FormData)) {
     headers.set("Content-Type", "application/json");
   }
+  headers.set("ngrok-skip-browser-warning", "true");
 
   // Inject active authorization token if present
   const accessToken = localStorage.getItem("access_token");

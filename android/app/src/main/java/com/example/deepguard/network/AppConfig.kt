@@ -20,17 +20,20 @@ object AppConfig {
     /** Android Studio Emulator Loopback URL */
     const val EMULATOR_BASE_URL = "http://10.0.2.2:8000/"
 
-    /** Physical Device LAN URL (Current PC Wi-Fi IP address) */
-    const val PHYSICAL_DEVICE_BASE_URL = "http://192.168.137.253:8000/"
+    /** Permanent Static Tunnel URL (Works everywhere: 4G, 5G, Any Wi-Fi, No IP changes!) */
+    const val PERMANENT_BASE_URL = "https://shove-siren-unreal.ngrok-free.dev/"
+
+    /** Physical Device LAN URL (Defaults to Permanent URL) */
+    const val PHYSICAL_DEVICE_BASE_URL = PERMANENT_BASE_URL
 
     /** Production Secure HTTPS URL */
-    const val PRODUCTION_BASE_URL = "https://api.deepguard.ai/"
+    const val PRODUCTION_BASE_URL = PERMANENT_BASE_URL
 
     /**
      * Active Base URL used by Retrofit and network services across the app.
      * Change this single line to switch between Emulator, Physical Phone, or Production.
      */
-    var BASE_URL: String = PHYSICAL_DEVICE_BASE_URL
+    var BASE_URL: String = PERMANENT_BASE_URL
 
     /**
      * Helper to dynamically update the BASE_URL at runtime if needed.

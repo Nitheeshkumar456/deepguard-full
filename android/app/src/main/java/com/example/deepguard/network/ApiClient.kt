@@ -12,8 +12,16 @@ object ApiClient {
         level = HttpLoggingInterceptor.Level.BASIC
     }
 
+    private val ngrokHeaderInterceptor = okhttp3.Interceptor { chain ->
+        val req = chain.request().newBuilder()
+            .addHeader("ngrok-skip-browser-warning", "true")
+            .build()
+        chain.proceed(req)
+    }
+
     private val unauthenticatedHttpClient by lazy {
         OkHttpClient.Builder()
+            .addInterceptor(ngrokHeaderInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -47,6 +55,7 @@ object ApiClient {
     private fun getAuthenticatedRetrofit(tokenManager: TokenManager): Retrofit {
         if (authenticatedRetrofit == null) {
             val authClient = OkHttpClient.Builder()
+                .addInterceptor(ngrokHeaderInterceptor)
                 .addInterceptor(AuthInterceptor(tokenManager))
                 .addInterceptor(loggingInterceptor)
                 .connectTimeout(60, TimeUnit.SECONDS)
