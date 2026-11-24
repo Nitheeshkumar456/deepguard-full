@@ -33,19 +33,19 @@ class UserResponse(BaseModel):
         from_attributes = True
 
 class OtpSend(BaseModel):
-    email: EmailStr
+    email: str = Field(..., description="Email address or username")
     purpose: str = Field("register", description="Purpose of verification (e.g. register, reset)")
 
 class OtpVerify(BaseModel):
-    email: EmailStr
+    email: str = Field(..., description="Email address or username")
     code: str = Field(..., min_length=6, max_length=6, description="6-digit verification code")
     purpose: str = Field("register", description="Purpose of verification (e.g. register, reset)")
 
 class ForgotPasswordRequest(BaseModel):
-    email: EmailStr
+    email: str = Field(..., description="Email address or username")
 
 class ResetPasswordRequest(BaseModel):
-    email: EmailStr
+    email: str = Field(..., description="Email address or username")
     token: str = Field(..., description="Secure reset token received during verification")
     new_password: str = Field(..., min_length=8, description="New password of at least 8 characters")
 

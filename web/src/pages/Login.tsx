@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { ShieldCheck, User, Mail, Lock, ArrowRight, Eye, EyeOff, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, User, Mail, Lock, ArrowRight, Eye, EyeOff, Loader2, AlertCircle, CheckCircle2, KeyRound, RefreshCw } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { apiService } from "../services/api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,10 +13,30 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
+  const [resending, setResending] = useState(false);
+  const [resendNotice, setResendNotice] = useState<string | null>(null);
+
+  const handleResendOtp = async () => {
+    const target = unverifiedEmail || username.trim();
+    if (!target) return;
+    setResending(true);
+    setResendNotice(null);
+    try {
+      const res = await apiService.sendOtp(target, "register");
+      setResendNotice(res.message || "A fresh OTP verification code has been dispatched to your email.");
+    } catch (err: any) {
+      setResendNotice(err.message || "Failed to resend verification code. Please try again.");
+    } finally {
+      setResending(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setUnverifiedEmail(null);
+    setResendNotice(null);
 
     // Validation
     if (!username.trim() || !password) {
@@ -62,7 +83,15 @@ export default function Login() {
         navigate("/dashboard");
       }, 1000);
     } catch (err: any) {
-      setError(err.message || "Invalid username/email or password.");
+      const errMsg = err.message || "Invalid username/email or password.";
+      setError(errMsg);
+      if (err.status === 403 || errMsg.toLowerCase().includes("not been verified") || errMsg.toLowerCase().includes("otp")) {
+        const match = errMsg.match(/\(([^)]+@[^)]+)\)/);
+        const resolved = match ? match[1] : trimmed;
+        setUnverifiedEmail(resolved);
+      } else {
+        setUnverifiedEmail(null);
+      }
     } finally {
       setLoading(false);
     }
@@ -96,9 +125,37 @@ export default function Login() {
 
           {/* Feedback Messages */}
           {error && (
-            <div className="mt-6 flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400 animate-pulse">
-              <AlertCircle size={18} className="mt-0.5 shrink-0" />
-              <span>{error}</span>
+            <div className="mt-6 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400">
+              <div className="flex items-start gap-3">
+                <AlertCircle size={18} className="mt-0.5 shrink-0" />
+                <span className="flex-1 leading-relaxed">{error}</span>
+              </div>
+              {unverifiedEmail && (
+                <div className="mt-4 pt-3 border-t border-red-500/20 flex flex-col gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/verify-otp?email=${encodeURIComponent(unverifiedEmail)}&purpose=register`)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-xs font-semibold transition"
+                    >
+                      <KeyRound size={14} />
+                      Enter Verification OTP
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleResendOtp}
+                      disabled={resending}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-medium transition disabled:opacity-50"
+                    >
+                      {resending ? <Loader2 size={14} className="animate-spin" /> : <RefreshCw size={14} />}
+                      Resend Code to Email
+                    </button>
+                  </div>
+                  {resendNotice && (
+                    <p className="text-xs text-amber-300 mt-1">{resendNotice}</p>
+                  )}
+                </div>
+              )}
             </div>
           )}
 

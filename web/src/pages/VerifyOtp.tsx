@@ -7,9 +7,10 @@ export default function VerifyOtp() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   
-  const email = searchParams.get("email") || "";
+  const emailParam = searchParams.get("email") || "";
   const purpose = searchParams.get("purpose") || "register";
 
+  const [targetEmail, setTargetEmail] = useState(emailParam);
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -62,11 +63,16 @@ export default function VerifyOtp() {
 
   const handleResend = async () => {
     if (!canResend) return;
+    const resolved = targetEmail.trim();
+    if (!resolved) {
+      setError("Please provide your email address or username to resend code.");
+      return;
+    }
     setLoading(true);
     setError(null);
     
     try {
-      await apiService.sendOtp(email, purpose);
+      await apiService.sendOtp(resolved, purpose);
       setResendTimer(30);
     } catch (err: any) {
       setError(err.message || "Failed to resend verification code.");
@@ -77,6 +83,11 @@ export default function VerifyOtp() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const resolved = targetEmail.trim();
+    if (!resolved) {
+      setError("Please provide your email address or username.");
+      return;
+    }
     const code = otp.join("");
     if (code.length < 6) {
       setError("Please enter the complete 6-digit code.");
@@ -87,14 +98,14 @@ export default function VerifyOtp() {
     setError(null);
 
     try {
-      const data = await apiService.verifyOtp(email, code, purpose);
+      const data = await apiService.verifyOtp(resolved, code, purpose);
       setSuccess(true);
       
       setTimeout(() => {
         if (purpose === "register") {
           navigate("/login");
         } else if (purpose === "reset" && data.reset_token) {
-          navigate(`/reset-password?email=${encodeURIComponent(email)}&token=${encodeURIComponent(data.reset_token)}`);
+          navigate(`/reset-password?email=${encodeURIComponent(resolved)}&token=${encodeURIComponent(data.reset_token)}`);
         } else {
           navigate("/login");
         }
@@ -135,8 +146,21 @@ export default function VerifyOtp() {
 
           <h2 className="text-2xl font-bold text-center">Two-Factor Verification</h2>
           <p className="mt-2 text-sm text-center text-slate-400 leading-relaxed">
-            Enter the 6-digit verification code sent to <span className="text-white font-medium block break-all">{email || "your registered email"}</span>
+            Enter the 6-digit verification code sent to <span className="text-white font-medium block break-all">{targetEmail || "your registered email"}</span>
           </p>
+
+          {!emailParam && (
+            <div className="mt-4">
+              <label className="block text-xs text-slate-400 mb-1">Email or Username</label>
+              <input
+                type="text"
+                placeholder="you@example.com or username"
+                value={targetEmail}
+                onChange={(e) => setTargetEmail(e.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-slate-900/50 px-4 py-2.5 text-sm text-white outline-none focus:border-violet-500"
+              />
+            </div>
+          )}
 
           {/* Feedback Messages */}
           {error && (

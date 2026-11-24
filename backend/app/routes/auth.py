@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-from ..main import limiter
+from ..limiter import limiter
 from typing import Optional
 import logging
 from fastapi import APIRouter, Depends, HTTPException, Request, status
@@ -136,9 +136,40 @@ def login(login_data: UserLogin, request: Request, db: Session = Depends(get_db)
         db.commit()
     
     if not user.is_verified:
+        # Generate and dispatch a fresh 6-digit OTP verification code to user's registered email
+        otp_code = generate_otp_code()
+        expiration = datetime.utcnow() + timedelta(minutes=10)
+        otp_record = OTP(
+            email=user.email,
+            code=otp_code,
+            purpose="register",
+            expires_at=expiration,
+            verified=False
+        )
+        db.add(otp_record)
+        db.commit()
+
+        if settings.SMTP_USER and settings.SMTP_PASSWORD:
+            delivered = send_otp_email(
+                recipient_email=user.email,
+                otp_code=otp_code,
+                purpose="register",
+                smtp_host=settings.SMTP_HOST,
+                smtp_port=settings.SMTP_PORT,
+                smtp_user=settings.SMTP_USER,
+                smtp_password=settings.SMTP_PASSWORD,
+                sender_name=settings.MAIL_FROM_NAME,
+            )
+            if delivered:
+                logger.info(f"Dispatched login verification OTP email to {user.email}")
+            else:
+                logger.error(f"Failed to dispatch login verification OTP email to {user.email}")
+        else:
+            print(f"\n[OTP MAIL STUB] To: {user.email} | Code: {otp_code} | Purpose: register\n")
+
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Your email address has not been verified. Please complete OTP verification."
+            detail=f"Your email address ({user.email}) has not been verified. A fresh OTP verification code has been sent to your email. Please verify to continue."
         )
     
     if not user.is_active:
@@ -291,15 +322,23 @@ def update_profile(
 @router.post("/send-otp", response_model=MsgResponse)
 @limiter.limit("5/minute")
 def send_otp(otp_data: OtpSend, request: Request, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == otp_data.email).first()
+    from sqlalchemy import or_, func
+    identifier = otp_data.email.strip()
+    user = db.query(User).filter(
+        or_(
+            func.lower(User.email) == identifier.lower(),
+            func.lower(User.name) == identifier.lower()
+        )
+    ).first()
     if not user:
         # Prevent email scanning enumeration: return generic response, but do not generate OTP
         return {"message": "If the account is registered, a verification code has been dispatched."}
     
+    target_email = user.email
     otp_code = generate_otp_code()
     expiration = datetime.utcnow() + timedelta(minutes=10)
     otp_record = OTP(
-        email=otp_data.email,
+        email=target_email,
         code=otp_code,
         purpose=otp_data.purpose,
         expires_at=expiration,
@@ -310,7 +349,7 @@ def send_otp(otp_data: OtpSend, request: Request, db: Session = Depends(get_db))
     
     if settings.SMTP_USER and settings.SMTP_PASSWORD:
         delivered = send_otp_email(
-            recipient_email=otp_data.email,
+            recipient_email=target_email,
             otp_code=otp_code,
             purpose=otp_data.purpose,
             smtp_host=settings.SMTP_HOST,
@@ -320,25 +359,39 @@ def send_otp(otp_data: OtpSend, request: Request, db: Session = Depends(get_db))
             sender_name=settings.MAIL_FROM_NAME,
         )
         if not delivered:
-            logger.error(f"OTP resend email delivery failed for {otp_data.email} (purpose={otp_data.purpose})")
+            logger.error(f"OTP resend email delivery failed for {target_email} (purpose={otp_data.purpose})")
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Unable to send OTP email. Please verify email settings or try again later."
             )
+        logger.info(f"Dispatched OTP verification email to {target_email} (purpose={otp_data.purpose})")
     else:
-        print(f"\n[OTP MAIL STUB] To: {otp_data.email} | Code: {otp_code} | Purpose: {otp_data.purpose}\n")
+        print(f"\n[OTP MAIL STUB] To: {target_email} | Code: {otp_code} | Purpose: {otp_data.purpose}\n")
         logger.warning("SMTP not configured. Set SMTP_USER and SMTP_PASSWORD in backend/.env.")
 
-    return {"message": "Verification code dispatched successfully."}
+    return {"message": f"Verification code dispatched successfully to {target_email}."}
 
 @router.post("/verify-otp", response_model=VerifyOtpResponse)
 @limiter.limit("5/minute")
 def verify_otp(verify_data: OtpVerify, request: Request, db: Session = Depends(get_db)):
+    from sqlalchemy import or_, func
+    identifier = verify_data.email.strip()
+    user = db.query(User).filter(
+        or_(
+            func.lower(User.email) == identifier.lower(),
+            func.lower(User.name) == identifier.lower()
+        )
+    ).first()
+    target_email = user.email if user else identifier
+
     # Find latest unverified, unexpired OTP matching query
     now = datetime.utcnow()
     otp_record = db.query(OTP).filter(
-        OTP.email == verify_data.email,
-        OTP.code == verify_data.code,
+        or_(
+            func.lower(OTP.email) == target_email.lower(),
+            func.lower(OTP.email) == identifier.lower()
+        ),
+        OTP.code == verify_data.code.strip(),
         OTP.purpose == verify_data.purpose,
         OTP.verified == False,
         OTP.expires_at > now
@@ -353,8 +406,7 @@ def verify_otp(verify_data: OtpVerify, request: Request, db: Session = Depends(g
     otp_record.verified = True
     db.commit()
     
-    if verify_data.purpose == "register":
-        user = db.query(User).filter(User.email == verify_data.email).first()
+    if verify_data.purpose in ("register", "login"):
         if user:
             user.is_verified = True
             db.commit()
@@ -364,8 +416,6 @@ def verify_otp(verify_data: OtpVerify, request: Request, db: Session = Depends(g
         }
     
     elif verify_data.purpose == "reset":
-        # Generate secure reset token
-        user = db.query(User).filter(User.email == verify_data.email).first()
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -396,15 +446,23 @@ def verify_otp(verify_data: OtpVerify, request: Request, db: Session = Depends(g
 @router.post("/forgot-password", response_model=MsgResponse)
 @limiter.limit("5/minute")
 def forgot_password(req: ForgotPasswordRequest, request: Request, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.email == req.email).first()
+    from sqlalchemy import or_, func
+    identifier = req.email.strip()
+    user = db.query(User).filter(
+        or_(
+            func.lower(User.email) == identifier.lower(),
+            func.lower(User.name) == identifier.lower()
+        )
+    ).first()
     if not user:
         # Prevent email scanning: return generic message
         return {"message": "If the account exists, a 6-digit OTP code has been dispatched."}
     
+    target_email = user.email
     otp_code = generate_otp_code()
     expiration = datetime.utcnow() + timedelta(minutes=10)
     otp_record = OTP(
-        email=req.email,
+        email=target_email,
         code=otp_code,
         purpose="reset",
         expires_at=expiration,
@@ -415,7 +473,7 @@ def forgot_password(req: ForgotPasswordRequest, request: Request, db: Session = 
     
     if settings.SMTP_USER and settings.SMTP_PASSWORD:
         delivered = send_otp_email(
-            recipient_email=req.email,
+            recipient_email=target_email,
             otp_code=otp_code,
             purpose="reset",
             smtp_host=settings.SMTP_HOST,
@@ -425,16 +483,17 @@ def forgot_password(req: ForgotPasswordRequest, request: Request, db: Session = 
             sender_name=settings.MAIL_FROM_NAME,
         )
         if not delivered:
-            logger.error(f"Password-reset OTP email delivery failed for {req.email}")
+            logger.error(f"Password-reset OTP email delivery failed for {target_email}")
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Unable to send OTP email. Please verify email settings or try again later."
             )
+        logger.info(f"Dispatched password reset OTP email to {target_email}")
     else:
-        print(f"\n[OTP MAIL STUB] To: {req.email} | Code: {otp_code} | Purpose: reset\n")
+        print(f"\n[OTP MAIL STUB] To: {target_email} | Code: {otp_code} | Purpose: reset\n")
         logger.warning("SMTP not configured. Set SMTP_USER and SMTP_PASSWORD in backend/.env.")
 
-    return {"message": "If the account exists, a 6-digit OTP code has been dispatched."}
+    return {"message": f"If the account exists, a 6-digit OTP code has been dispatched to {target_email}."}
 
 @router.post("/reset-password", response_model=MsgResponse)
 @limiter.limit("5/minute")
@@ -447,7 +506,13 @@ def reset_password(req: ResetPasswordRequest, request: Request, db: Session = De
             detail=strength_msg
         )
     
-    user = db.query(User).filter(User.email == req.email).first()
+    from sqlalchemy import or_, func
+    user = db.query(User).filter(
+        or_(
+            func.lower(User.email) == req.email.strip().lower(),
+            func.lower(User.name) == req.email.strip().lower()
+        )
+    ).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
