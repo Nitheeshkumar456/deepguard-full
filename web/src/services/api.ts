@@ -1,5 +1,15 @@
-// API base URL configured from environment configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// Dynamically resolve API base URL so mobile devices on LAN can connect seamlessly
+const getApiBaseUrl = (): string => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  if (typeof window !== "undefined" && window.location?.hostname) {
+    return `http://${window.location.hostname}:8000`;
+  }
+  return "http://localhost:8000";
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 export class ApiError extends Error {
   status: number;

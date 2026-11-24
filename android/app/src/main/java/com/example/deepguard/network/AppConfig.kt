@@ -21,7 +21,7 @@ object AppConfig {
     const val EMULATOR_BASE_URL = "http://10.0.2.2:8000/"
 
     /** Physical Device LAN URL (Current PC Wi-Fi IP address) */
-    const val PHYSICAL_DEVICE_BASE_URL = "http://192.168.1.4:8000/"
+    const val PHYSICAL_DEVICE_BASE_URL = "http://192.168.1.8:8000/"
 
     /** Production Secure HTTPS URL */
     const val PRODUCTION_BASE_URL = "https://api.deepguard.ai/"
