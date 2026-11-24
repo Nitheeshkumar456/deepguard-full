@@ -2,6 +2,8 @@
 node_modules/
 dist/
 dist-ssr/
+tools/
+*.zip
 *.local
 .env
 .env.*
