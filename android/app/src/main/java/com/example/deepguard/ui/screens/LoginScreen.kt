@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -25,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.deepguard.network.AppConfig
 import com.example.deepguard.presentation.AuthState
 import com.example.deepguard.presentation.AuthViewModel
 import com.example.deepguard.ui.components.DeepGuardButton
@@ -44,12 +48,49 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var localError by remember { mutableStateOf<String?>(null) }
+    var showServerDialog by remember { mutableStateOf(false) }
+    var serverUrlInput by remember { mutableStateOf(AppConfig.BASE_URL) }
 
     LaunchedEffect(authState) {
         if (authState is AuthState.Success) {
             viewModel.resetState()
             onLoginSuccess()
         }
+    }
+
+    if (showServerDialog) {
+        AlertDialog(
+            onDismissRequest = { showServerDialog = false },
+            title = { Text("Server Configuration") },
+            text = {
+                Column {
+                    Text(
+                        text = "Enter your PC's active IP address and port (e.g. http://192.168.137.253:8000/):",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = serverUrlInput,
+                        onValueChange = { serverUrlInput = it },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    AppConfig.updateBaseUrl(serverUrlInput)
+                    showServerDialog = false
+                }) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showServerDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 
     Column(
@@ -78,7 +119,7 @@ fun LoginScreen(
         DeepGuardTextField(
             value = email,
             onValueChange = { email = it; localError = null },
-            label = "Email Address"
+            label = "Username or Email"
         )
         
         Spacer(modifier = Modifier.height(16.dp))
@@ -108,15 +149,23 @@ fun LoginScreen(
             text = "Sign In",
             onClick = { 
                 localError = null
-                if (email.isBlank() || password.isBlank()) {
+                val trimmed = email.trim()
+                if (trimmed.isBlank() || password.isBlank()) {
                     localError = "Please fill in all fields."
                     return@DeepGuardButton
                 }
-                if (!PasswordValidator.isValidEmail(email)) {
-                    localError = "Please enter a valid email address."
-                    return@DeepGuardButton
+                if (trimmed.contains("@")) {
+                    if (!PasswordValidator.isValidEmail(trimmed)) {
+                        localError = "Please enter a valid email address."
+                        return@DeepGuardButton
+                    }
+                } else {
+                    if (trimmed.length < 3) {
+                        localError = "Username must be at least 3 characters."
+                        return@DeepGuardButton
+                    }
                 }
-                viewModel.login(email, password)
+                viewModel.login(trimmed, password)
             },
             isLoading = authState is AuthState.Loading
         )
@@ -134,6 +183,19 @@ fun LoginScreen(
                 text = "Don't have an account? Sign up",
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                 fontWeight = FontWeight.Bold
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        TextButton(onClick = { 
+            serverUrlInput = AppConfig.BASE_URL
+            showServerDialog = true 
+        }) {
+            Text(
+                text = "Server: ${AppConfig.BASE_URL}",
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                style = MaterialTheme.typography.bodySmall
             )
         }
 

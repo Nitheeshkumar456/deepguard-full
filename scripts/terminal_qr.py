@@ -2,7 +2,7 @@ import qrcode
 import sys
 
 def main():
-    wifi_ip = "192.168.1.8"
+    wifi_ip = "192.168.137.253"
     alt_ip = "10.91.181.20"
 
     print("=" * 60)
