@@ -1,0 +1,11 @@
+{
+  "name": "deepguard-ai",
+  "version": "1.0.0",
+  "description": "DeepGuard AI - Multimodal Authenticity Platform",
+  "scripts": {
+    "start": "python scripts/terminal_qr.py",
+    "mobile": "python scripts/terminal_qr.py",
+    "qr": "python scripts/terminal_qr.py",
+    "build:apk": "cd android && gradlew.bat assembleDebug"
+  }
+}
